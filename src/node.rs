@@ -1,5 +1,7 @@
 use std::str::FromStr;
 
+use crate::condition::SignProbability;
+
 #[derive(Debug, Clone, PartialEq)]
 pub enum Node {
     Literal(f32),
@@ -24,10 +26,25 @@ impl Node {
     pub fn sqrt(node: Self) -> Self {
         Self::Root(Box::new(Self::Literal(2.)), Box::new(node))
     }
+
+    pub fn sign(&self) -> SignProbability {
+        match self {
+            Self::Literal(f) => f.clone().into(),
+            Self::Absolute(_) => SignProbability::pos(),
+            _ => SignProbability::default(),
+        }
+    }
+}
+
+impl From<f32> for Node {
+    fn from(value: f32) -> Self {
+        Self::Literal(value)
+    }
 }
 
 impl FromStr for Node {
-    fn from_str(s: &str) -> Result<Self, Self::Err> {
+    type Err = ();
+    fn from_str(_s: &str) -> Result<Self, Self::Err> {
         todo!()
     }
 }
