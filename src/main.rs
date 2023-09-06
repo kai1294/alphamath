@@ -1,8 +1,11 @@
 use bevy::prelude::*;
 use bevy_pancam::{PanCam, PanCamPlugin};
 
+pub mod node;
+
 fn main() {
     App::new()
+        .insert_resource(ClearColor(Color::rgb(0., 0., 0.)))
         .add_plugins((
             DefaultPlugins,
             PanCamPlugin::default(),
@@ -14,6 +17,7 @@ fn main() {
 
 #[derive(Resource)]
 pub struct TextRes(TextStyle);
+
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let font = asset_server.load("fonts/Roboto-Regular.ttf");
@@ -36,31 +40,23 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             ..default()
         }
     );
+
+    commands.spawn(
+        Text2dBundle {
+            text: Text::from_sections([
+                TextSection::new("1", text_style.clone()),
+                TextSection::new("=", text_style.clone()),
+                TextSection::new("1", text_style.clone()),
+            ]),
+            transform: Transform::from_xyz(0., -10., 0.),
+            ..default()
+        }
+    );
 }
 
 fn update(
-    mut gizmos: Gizmos,
-    pos: Query<&GlobalTransform, With<Camera2d>>,
     mut t: Query<&mut Text>,
     text_style: Res<TextRes>,
 ) {
-    let pos = pos.single();
-    let mut text = t.single_mut();
-
-    *text = Text::from_section(format!("cam pos: {}", pos.translation().to_string()), text_style.0.clone());
-
-    for x in 0..100 {
-        for y in 0..100 {
-            gizmos.line_2d(
-                Vec2::from_array([(x * 100) as f32, (y * 100) as f32]),
-                Vec2::from_array([((x + 1) * 100) as f32, (y * 100) as f32]),
-                Color::DARK_GRAY
-            );
-            gizmos.line_2d(
-                Vec2::from_array([(x * 100) as f32, (y * 100) as f32]),
-                Vec2::from_array([((x) * 100) as f32, ((y + 1) * 100) as f32]),
-                Color::DARK_GRAY
-            );
-        }
-    }
+    
 }
