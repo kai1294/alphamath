@@ -1,236 +1,277 @@
-import { ActionIcon, Box, Button, Card, Center, Checkbox, CloseButton, Combobox, Container, CopyButton, Flex, Grid, Group, InputBase, Paper, ScrollArea, Select, Stack, Text, TextInput, Textarea, useCombobox } from '@mantine/core'
-import { useHover, useListState, useLogger, useMergedRef, useSetState } from '@mantine/hooks';
+import { ActionIcon, Affix, Box, Button, Card, Center, Checkbox, CloseButton, Combobox, Container, CopyButton, Flex, Grid, Group, InputBase, Paper, ScrollArea, Select, Stack, Text, TextInput, Textarea, Transition, useCombobox } from '@mantine/core'
+import { useHover, useId, useListState, useLogger, useMergedRef, useSetState } from '@mantine/hooks';
 import React, { useContext, useEffect, useState } from 'react'
-import { IconArrowRight, IconPlus } from '@tabler/icons-react';
-import { modals } from '@mantine/modals';
-import { DndProvider, useDrag, useDrop } from 'react-dnd';
-import { TouchBackend, TouchBackendImpl } from 'react-dnd-touch-backend';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Nodes, actions } from "./nodes";
+import { Dot, Minus, Plus, TextGlyph } from './glyphs';
+import { match } from './utils';
+import { useContextMenu } from 'mantine-contextmenu';
+import { IconInfoCircle } from '@tabler/icons-react';
+import { DndContext, useDndMonitor, useDraggable, useDroppable } from '@dnd-kit/core';
+import { CSS } from '@dnd-kit/utilities';
 
-const CreateNode = {
-    variable: (data) => ({ type: NodeTypes.Variable, data }),
-    number: (data) => ({ type: NodeTypes.Number, data }),
-    add: (a, b) => ({ type: NodeTypes.Addition, data: [a, b] }),
-}
+const OptionsContext = React.createContext();
 
-const NodeTypes = {
-    Variable: "variable",
-    Number: "number",
-    Addition: "addition",
-};
-
-const DraggableTypes = {
-    Node: "node",
-};
-
-let Boxed = ({ children, type }) => {
-    let [{ isDragging }, refDrag] = useDrag(() => ({
-        type,
-        collect: (monitor) => ({
-            isDragging: !!monitor.isDragging(),
-        })
-    }));
-
-    const { hovered, ref: refHover } = useHover();
-
-    const ref = useMergedRef(refDrag, refHover);
-
+const Gap = ({ visible }) => {
     return (
-        <Paper
-            withBorder
-            p="sm"
-            px="md"
-            ref={ref}
-            bg={hovered ? "dark.5" : "dark.6"}>
-            {children}
-        </Paper>
-    )
+        <Transition
+            mounted={visible}
+            transition={{
+                in: { width: "1em" },
+                out: { width: "0" },
+                transitionProperty: "width",
+            }}>
+            {(styles) => <Paper
+                p="md"
+                style={styles}
+                />}
+        </Transition>
+    );
 };
 
-const requiresParanthesis = (self, child) => {
-    return true;
-    if([NodeTypes.Addition].includes(child.type)) {
-    }
-
-    return false;
-};
-
-const StatementContext = React.createContext();
-
-const StatementProvider = ({ stmt, onChange, children }) => {
-    let add = (node) => {
-        console.log(simplify(stmt.right));
-        onChange({
-            left: CreateNode.add(stmt.left, node),
-            right: CreateNode.add(stmt.right, node),
-        });
-    };
-
-    let simplify = (node) => {
-        return ({
-            [NodeTypes.Addition]: () => ({
-                data: node.data.flatMap(n => (n.type == NodeTypes.Addition) ? (n.data) : n).map(simplify),
-                ...node,
-            }),
-        }[node.type] || (() => node))() || node;
-    }
+const DropArea = ({ index }) => {
+    let id = useId();
+    const { setNodeRef, isOver } = useDroppable({
+        id,
+    });
     
-    let simplifyAll = () => {
-        onChange({
-            left: simplify(stmt.left),
-            right: simplify(stmt.right),
-        })
-    };
-
-    let calculate = (node) => {
-        return ({
-            [NodeTypes.Addition]: () => ({
-                data: node.data.reduce((acc, n, idx) =>
-                    acc[acc.length-1]?.type == NodeTypes.Number && n.type == NodeTypes.Number
-                    ? [...acc.slice(0, -1), {
-                        data: Number(acc[acc.length-1]?.data) + Number(n.data),
-                        ...n,
-                    }] : [...acc, n], []),
-                ...node,
-            }),
-        }[node.type] || (() => node))() || node;
-    };
-
-    let calculateLiterals = () => {
-        onChange({
-            left: calculate(stmt.left),
-            right: calculate(stmt.right),
-        })
-    };
-
     return (
-        <StatementContext.Provider value={{
-            stmt,
-            onChange,
-            add,
-            simplifyAll,
-            calculateLiterals,
-        }}>
-            {children}
-        </StatementContext.Provider>
-    )
-}
+        <Box ref={setNodeRef}>
 
-const Statement = ({ stmt, onChange }) => {
-    console.log(stmt);
-
-    return (
-        <StatementProvider {...{
-            stmt,
-            onChange,
-        }}>
-            <Stack>
-                <Group>
-                    {Renderers.expr(stmt.left)}
-                    <Text>=</Text>
-                    {Renderers.expr(stmt.right)}
-                </Group>
-                <StatementControls />
-            </Stack>
-        </StatementProvider>
-    )
+        </Box>
+    );
 };
 
-const StatementControls = () => {
-    let stmt = useContext(StatementContext);
+const NodeContext = React.createContext();
+const NodeComponent = ({ value, onChange }) => {
+    let [{ paperBorder }] = useContext(OptionsContext);
+    let { showContextMenu } = useContextMenu();
+    let id = useId();
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id,
+    });
+    const style = {
+        transform: CSS.Translate.toString(transform),
+    };
+
+    let executeAction = (id, args) => {
+        let action = actions.find(a => a.id == id);
+        let newValue = action.apply(value);
+        onChange(newValue);
+    };
+
+    let el = match(value.type)({
+        Number: () => <TextGlyph text={value.data} />,
+        Variable: () => <TextGlyph text={value.data} />,
+        Addition: () => <AdditionNode />,
+        Negated: () => <NegatedNode />,
+        Multiplication: () => <MultiplicationNode />,
+    });
 
     return (
-        <Group justify='space-between'>
-            {[
-                { name: "calculate", run: () => stmt.calculateLiterals() },
-                { name: "add 5", run: () => stmt.add(CreateNode.number(5)) },
-                { name: "simplify", run: () => stmt.simplifyAll() },
-            ].map((cmd, i) => <Button key={i} onClick={() => {cmd.run()}}>
-                {cmd.name}
-            </Button>)}
+        <NodeContext.Provider value={{
+            executeAction,
+            value,
+            setValue: onChange,
+        }}>
+            <Paper
+                withBorder={paperBorder}
+                p="xs"
+                px="xs"
+                onContextMenu={showContextMenu([
+                    {
+                        key: "info",
+                        title: `Node::${value.type}`,
+                        icon: <IconInfoCircle size={16} />,
+                        disabled: true,
+                        onClick: () => { },
+                    },
+                    {
+                        key: "divider",
+                    },
+                    ...actions.map(a => ({
+                        key: a.id,
+                        icon: a.icon,
+                        title: a.name,
+                        onClick: () => executeAction(a.id),
+                    })),
+                ])}
+                {...attributes}
+                {...listeners}
+                style={style}
+                ref={setNodeRef}>
+                <DndContext>
+                    {el}
+                </DndContext>
+            </Paper>
+        </NodeContext.Provider>
+    );
+};
+
+const NegatedNode = () => {
+    let { value, setValue } = useContext(NodeContext);
+
+    return (
+        <Group wrap="nowrap">
+            <Minus />
+            <NodeComponent
+                value={value.data}
+                onChange={(v) => setValue({
+                    data: v,
+                    ...value,
+                })}
+            />
+        </Group>
+    );
+}
+
+const MultiplicationNode = () => {
+    let { value, setValue } = useContext(NodeContext);
+    // Dnd kit stuff
+    let id = useId();
+    const { isOver, setNodeRef } = useDroppable({
+        id,
+        data: {
+            value,
+        },
+    });
+
+    // Node stuff
+    let elements = [];
+
+    let prev;
+    for (let idx = 0; idx < value.data.length; idx++) {
+        let node = value.data[idx];
+
+        if (prev) {
+            elements.push(<Dot />);
+        }
+
+        elements.push(<NodeComponent
+            value={node}
+            onChange={(v) => setValue({
+                type: value.type,
+                data: value.data.map((t, i) => i == idx ? v : t)
+            })} />);
+
+        prev = node;
+    }
+
+    return (
+        <DndContext>
+            <Group ref={setNodeRef} wrap="nowrap">{elements.map((el, i) => {
+                el.key = i;
+                return el;
+            })}</Group>
+        </DndContext>
+    );
+};
+
+const AdditionNode = () => {
+    let [{ hidePlusIfNegated }] = useContext(OptionsContext);
+    let { value, setValue } = useContext(NodeContext);
+    // Dnd kit stuff
+    let id = useId();
+    const { isOver, setNodeRef } = useDroppable({
+        id,
+        data: {
+            value,
+        },
+    });
+
+    // Node stuff
+    let elements = [];
+
+    let prev;
+    for (let idx = 0; idx < value.data.length; idx++) {
+        let node = value.data[idx];
+
+        if (prev && (hidePlusIfNegated ? node.type != "Negated" : true)) {
+            elements.push(<Plus />);
+        }
+
+        //elements.push(<Gap visible={isOver} />);
+
+        elements.push(<NodeComponent
+            value={node}
+            onChange={(v) => setValue({
+                type: value.type,
+                data: value.data.map((t, i) => i == idx ? v : t)
+            })} />);
+
+        prev = node;
+    }
+
+    return (
+        <Group ref={setNodeRef} wrap="nowrap" bg={isOver ? "dark" : ""}>
+            {elements.map((el, i) => (<div key={i}>{el}</div>))}
         </Group>
     );
 };
 
-let Render = (...n) => Renderers[n[0].type](...n);
-
-let Renderers = {
-    expr: (expr) => {
-        let [{ isOver }, refDrop] = useDrop(() => ({
-            accept: DraggableTypes.Node,
-            drop: (item, monitor) => {
-
-            },
-            collect: (monitor) => ({
-                isOver: !!monitor.isOver(),
-            }),
-        }), [expr]);
-
-        return (
-            <Paper
-                ref={refDrop}
-                withBorder={isOver}
-                p={isOver ? "md" : "sm"}>
-                {Render(expr)}
-            </Paper>
-        );
-    },
-
-    // node
-    [NodeTypes.Variable]: ({ data }) => {
-        return (
-            <Boxed type={DraggableTypes.Node}>{data}</Boxed>
-        )
-    },
-
-    [NodeTypes.Number]: ({ data }) => {
-        return (
-            <Boxed type={DraggableTypes.Node}>{data}</Boxed>
-        )
-    },
-
-    [NodeTypes.Addition]: ({ data }) => {
-        return (
-            <Group>
-                {data
-                    .map((n, i) => (
-                        <Box key={i*10}>{Render(n)}</Box>
-                    ))
-                    .reduce((acc, obj, idx) =>
-                        [
-                            ...(idx ? [...acc, <Text key={idx*10+1}>+</Text>] : [...acc]),
-                            ...(requiresParanthesis(data, obj) ? [
-                                <Text key={idx*10+2}>(</Text>,
-                                obj,
-                                <Text key={idx*10+3}>)</Text>,
-                            ] : [obj])
-                        ],
-                        []
-                    )}
-            </Group>
-        )
-    },
-}
-
 const App = () => {
-    let [statements, { setItem }] = useListState([
-        { type: "eq", left: CreateNode.variable("x"), right: CreateNode.add(CreateNode.number(3), CreateNode.number(2)) }
-    ])
+    let [options, setOptions] = useSetState({
+        paperBorder: false,
+    });
+
+    let [node, setNode] = useState(Nodes.Addition([
+        Nodes.Variable("x"),
+        Nodes.Number(1),
+        Nodes.Negated(Nodes.Number(2)),
+        Nodes.Number(4),
+        Nodes.Addition([
+            Nodes.Number(1),
+            Nodes.Number(1),
+        ]),
+        Nodes.Number(9),
+    ]));
 
     return (
-        <Container h="100vh">
-                <Center h="100vh">
-                    {statements.map((stmt, i) => <Box key={i}>
-                        <Statement
-                            stmt={stmt}
-                            onChange={(newdata) => {
-                                setItem(i, newdata);
-                            }}
-                            />
-                    </Box>)}
+        <Container h="100vh" w="100vh" fluid>
+            <OptionsContext.Provider value={[options, setOptions]}>
+                <Center w="100vh" h="100%">
+                    <NodeComponent
+                        value={node}
+                        onChange={setNode}
+                    />
                 </Center>
+                <OptionsPanel />
+            </OptionsContext.Provider>
         </Container>
     )
 }
+
+const OptionsPanel = () => {
+    let [options, setOptions] = useContext(OptionsContext);
+
+    let elements = [
+        {
+            type: "bool",
+            id: "paperBorder",
+            label: "Paper Border",
+        },
+        {
+            type: "bool",
+            id: "hidePlusIfNegated",
+            label: "Hide + if subtraction",
+        },
+    ].map((opt, i) => {
+        return match(opt.type)({
+            bool: () => <Checkbox
+                checked={options[opt.id]}
+                label={opt.label}
+                onChange={(e) => setOptions({ [opt.id]: e.currentTarget.checked })} />
+        });
+    });
+
+    return (
+        <Affix position={{ bottom: "1em", right: "1em" }}>
+            <Paper withBorder p="md">
+                <Stack gap="md">
+                    {elements}
+                </Stack>
+            </Paper>
+        </Affix>
+    );
+};
 
 export default App
