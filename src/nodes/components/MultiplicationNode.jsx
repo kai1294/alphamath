@@ -1,12 +1,12 @@
-import { useContext, useId } from "react";
-import { NodeContext, OptionsContext } from "../../contexts";
-import { useDroppable } from "@dnd-kit/core";
-import { Plus } from "../../glyphs";
-import { NodeComponent } from "./Node";
+import { DndContext, useDroppable } from "@dnd-kit/core";
 import { Group } from "@mantine/core";
+import { useId } from "@mantine/hooks";
+import { useContext } from "react";
+import { NodeComponent } from './Node';
+import { NodeContext } from "../../contexts";
+import { Dot } from "../../glyphs";
 
-const AdditionNode = () => {
-    let [{ hidePlusIfNegated }] = useContext(OptionsContext);
+const MultiplicationNode = () => {
     let { value, setValue } = useContext(NodeContext);
     // Dnd kit stuff
     let id = useId();
@@ -24,11 +24,9 @@ const AdditionNode = () => {
     for (let idx = 0; idx < value.data.length; idx++) {
         let node = value.data[idx];
 
-        if (prev && (hidePlusIfNegated ? node.type != "Negated" : true)) {
-            elements.push(<Plus />);
+        if (prev) {
+            elements.push(<Dot />);
         }
-
-        //elements.push(<Gap visible={isOver} />);
 
         elements.push(<NodeComponent
             value={node}
@@ -41,10 +39,13 @@ const AdditionNode = () => {
     }
 
     return (
-        <Group ref={setNodeRef} wrap="nowrap" bg={isOver ? "dark" : ""}>
-            {elements.map((el, i) => (<div key={i}>{el}</div>))}
-        </Group>
+        <DndContext>
+            <Group ref={setNodeRef} wrap="nowrap">{elements.map((el, i) => {
+                el.key = i;
+                return el;
+            })}</Group>
+        </DndContext>
     );
 };
 
-export default AdditionNode;
+export default MultiplicationNode;
