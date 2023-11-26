@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "math (real)",
   "main": "index.js",
+  "homepage": "https://thealan404.github.io/alphamath",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
