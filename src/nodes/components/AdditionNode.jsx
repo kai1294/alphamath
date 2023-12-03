@@ -2,15 +2,12 @@ import { useContext } from "react";
 import { NodeContext, OptionsContext } from "../../contexts";
 import { Plus } from "../../glyphs";
 import { NodeComponent } from "./Node";
-import { useId } from "@mantine/hooks";
 import { SortableContainer } from "./common/SortableContainer";
 
 const AdditionNode = () => {
     let [{ hidePlusIfNegated }] = useContext(OptionsContext);
     let { value, setValue } = useContext(NodeContext);
-    let id = useId();
 
-    // Node stuff
     let elements = [];
 
     let prev;
@@ -21,10 +18,7 @@ const AdditionNode = () => {
             elements.push(<Plus />);
         }
 
-        //elements.push(<Gap visible={isOver} />);
-
         elements.push(<NodeComponent
-            dndId={`${id}::${idx}`}
             value={node}
             onChange={(v) => setValue({
                 type: value.type,
@@ -37,7 +31,7 @@ const AdditionNode = () => {
     return (
         <SortableContainer
             elements={elements}
-            items={value.data.map((_, i) => `${id}::${i}`)}
+            items={value.data.map((n) => n.uuid)}
             />
     );
 };

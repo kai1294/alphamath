@@ -11,9 +11,14 @@ export const SortableContainer = ({ elements, items }) => {
     let [activeIndex, setActiveIndex] = useState(null);
     let sensors = useDndSensors();
 
+    const findChild = (uuid) => {
+        return value.data.indexOf(value.data.find(n => n.uuid == uuid));
+    }
+
     return (
         <DndContext sensors={sensors} onDragEnd={onDragEnd} onDragStart={onDragStart}>
             <SortableContext
+                id={`${value.uuid}::container`}
                 strategy={horizontalListSortingStrategy}
                 items={items}>
                 <Group wrap="nowrap">
@@ -33,15 +38,15 @@ export const SortableContainer = ({ elements, items }) => {
     );
 
     function onDragStart(e) {
-        setActiveIndex(Number(e.active.id.split("::")[1]));
+        setActiveIndex(findChild(e.active.id));
     }
 
     function onDragEnd(e) {
         const { active, over } = e;
 
         if (over && active.id !== over.id) {
-            let from = Number(active.id.split("::")[1]);
-            let to = Number(over.id.split("::")[1]);
+            let from = findChild(active.id);
+            let to = findChild(over.id);
 
             let data = arrayMove(
                 value.data,

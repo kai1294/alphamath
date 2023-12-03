@@ -1,23 +1,12 @@
-import { DndContext, useDroppable } from "@dnd-kit/core";
-import { Group } from "@mantine/core";
-import { useId } from "@mantine/hooks";
 import { useContext } from "react";
 import { NodeComponent } from './Node';
 import { NodeContext } from "../../contexts";
 import { Dot } from "../../glyphs";
+import { SortableContainer } from "./common/SortableContainer";
 
 const MultiplicationNode = () => {
     let { value, setValue } = useContext(NodeContext);
-    // Dnd kit stuff
-    let id = useId();
-    const { isOver, setNodeRef } = useDroppable({
-        id,
-        data: {
-            value,
-        },
-    });
-
-    // Node stuff
+    
     let elements = [];
 
     let prev;
@@ -41,7 +30,7 @@ const MultiplicationNode = () => {
     return (
         <SortableContainer
             elements={elements}
-            items={value.data.map((_, i) => `${id}::${i}`)}
+            items={value.data.map((n) => n.uuid)}
             />
     );
 };

@@ -16,7 +16,7 @@ import MultiplicationNode from "./MultiplicationNode";
 import NegatedNode from './NegatedNode';
 import { useSortable } from "@dnd-kit/sortable";
 
-export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
+export const NodeComponent = ({ value, onChange }) => {
     let { showContextMenu } = useContextMenu();
     const {
         attributes,
@@ -26,13 +26,13 @@ export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
         transition,
         isDragging,
     } = useSortable({
-        id: dndId,
+        id: value.uuid,
     });
     const style = {
         transform: CSS.Translate.toString(transform),
         transition,
         userSelect: "none",
-        opacity: isDragging ? 0.1 : 1,
+        //opacity: isDragging ? 0.1 : 1,
     };
 
     let executeAction = (id, args) => {
@@ -64,7 +64,7 @@ export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
                         {
                             key: "divider",
                         },
-                        ...actions.map(a => ({
+                        ...actions.filter(a => a.filter ? a.filter(value) : true).map(a => ({
                             key: a.id,
                             icon: a.icon,
                             title: a.name,

@@ -48,46 +48,58 @@ const App = () => {
 const DebugPanel = ({ value, onChange }) => {
     return (
         <Paper withBorder p="md" w="50vw">
+            <Group>
+                <Text>Change state:</Text>
+                <Button.Group>
+                    {[{
+                        name: "1+4+3",
+                        state: Nodes.Addition([
+                            Nodes.Number(1),
+                            Nodes.Number(4),
+                            Nodes.Number(3),
+                        ]),
+                    }, {
+                        name: "2*3*5",
+                        state: Nodes.Multiplication([
+                            Nodes.Number(2),
+                            Nodes.Number(3),
+                            Nodes.Number(5),
+                        ]),
+                    }, {
+                        name: "35+45",
+                        state: Nodes.Addition([
+                            Nodes.Number(35),
+                            Nodes.Number(45),
+                        ]),
+                    }, {
+                        name: "3*(5x-1)",
+                        state: Nodes.Multiplication([
+                            Nodes.Number(3),
+                            Nodes.Addition([
+                                Nodes.Multiplication([
+                                    Nodes.Number(5),
+                                    Nodes.Variable("x"),
+                                ]),
+                                Nodes.Negated(Nodes.Number(1))
+                            ])
+                        ])
+                    }].map((p, i) => (
+                        <Button key={i} variant="default" onClick={() => onChange(p.state)}>
+                            {p.name}
+                        </Button>
+                    ))}
+                </Button.Group>
+            </Group>
             <Accordion>
                 <Accordion.Item value="debug">
                     <Accordion.Control>Debug</Accordion.Control>
                     <Accordion.Panel>
-                        <Group>
-                            <Text>Change state:</Text>
-                            <Button.Group>
-                                {[{
-                                    name: "1+4+3",
-                                    state: Nodes.Addition([
-                                        Nodes.Number(1),
-                                        Nodes.Number(4),
-                                        Nodes.Number(3),
-                                    ]),
-                                }, {
-                                    name: "3*(5x-1)",
-                                    state: Nodes.Multiplication([
-                                        Nodes.Number(3),
-                                        Nodes.Addition([
-                                            Nodes.Multiplication([
-                                                Nodes.Number(5),
-                                                Nodes.Variable("x"),
-                                            ]),
-                                            Nodes.Negated(Nodes.Number(1))
-                                        ])
-                                    ])
-                                }].map((p, i) => (
-                                    <Button key={i} variant="default" onClick={() => onChange(p.state)}>
-                                        {p.name}
-                                    </Button>
-                                ))}
-                            </Button.Group>
-                        </Group>
-
                         <JsonInput
                             label="State"
                             autosize
                             formatOnBlur
                             disabled
-                            value={JSON.stringify(value, null, "\t")}
+                            value={JSON.stringify(value)}
                         />
                     </Accordion.Panel>
                 </Accordion.Item>
