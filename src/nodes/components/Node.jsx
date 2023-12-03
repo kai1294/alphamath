@@ -33,7 +33,7 @@ export const NodeComponent = ({ value, onChange }) => {
         transition,
         userSelect: "none",
         touchAction: "manipulation",
-        //opacity: isDragging ? 0.1 : 1,
+        opacity: isDragging ? 0.1 : 1,
     };
 
     let executeAction = (id, args) => {

@@ -30,7 +30,11 @@ const apply = (node) => {
                 }
             }
 
-            return Nodes.Addition(list);
+            if (!list.length) {
+                list.push(Nodes.Number(0));
+            }
+
+            return list.length == 1 ? list[0] : Nodes.Addition(list);
         },
         Multiplication: () => {
             let list = [];
@@ -58,7 +62,7 @@ const apply = (node) => {
                 }
             }
 
-            return Nodes.Multiplication(list);
+            return list.length == 1 ? list[0] : Nodes.Multiplication(list);
         },
         _: () => node,
     });

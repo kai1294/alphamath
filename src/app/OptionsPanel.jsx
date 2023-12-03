@@ -18,6 +18,11 @@ export const OptionsPanel = () => {
             id: "hidePlusIfNegated",
             label: "Hide + if subtraction",
         },
+        {
+            type: "bool",
+            id: "paintContainersDark",
+            label: "Paint containers dark when dragging",
+        },
     ].filter(x=>x).map((opt, i) => {
         return match(opt.type)({
             bool: () => <Checkbox

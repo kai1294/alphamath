@@ -11,8 +11,8 @@ const filter = (node) => {
 };
 
 export default {
-    name: "Group shared multiplicants",
-    id: "group_mul",
+    name: "",
+    id: "",
     filter,
     apply,
 };

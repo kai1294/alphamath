@@ -2,11 +2,12 @@ import { DndContext, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { SortableContext, arrayMove, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import { useDndSensors } from "../../../utils";
 import { useContext, useState } from "react";
-import { NodeContext } from "../../../contexts";
+import { NodeContext, OptionsContext } from "../../../contexts";
 import { Group } from "@mantine/core";
 import { NodeComponent, NodeComponentRenderer } from "../Node";
 
 export const SortableContainer = ({ elements, items }) => {
+    const [{ paintContainersDark }] = useContext(OptionsContext);
     let { value, setValue } = useContext(NodeContext);
     let [activeIndex, setActiveIndex] = useState(null);
     let sensors = useDndSensors();
@@ -25,7 +26,7 @@ export const SortableContainer = ({ elements, items }) => {
                 id={`${value.uuid}::container`}
                 strategy={horizontalListSortingStrategy}
                 items={items}>
-                <Group wrap="nowrap">
+                <Group wrap="nowrap" bg={activeIndex === null ? undefined : (paintContainersDark ? "dark" : undefined)}>
                     {elements.map((el, i) => (<div key={i}>{el}</div>))}
                 </Group>
             </SortableContext>

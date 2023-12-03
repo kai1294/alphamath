@@ -36,6 +36,7 @@ const App = () => {
                             onChange={setNode}
                         />
                     </Stack>
+
                 </Center>
                 <OptionsPanel />
             </OptionsContext.Provider>

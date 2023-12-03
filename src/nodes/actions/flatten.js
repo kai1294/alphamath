@@ -7,9 +7,11 @@ const apply = (node) => {
         };
 
         if (node.type == "Addition") {
+            let data = node.data.flatMap(n => apply(n.type == "Addition" ? n.data : n));
+
             return {
                 ...node,
-                data: node.data.flatMap(n => apply(n.type == "Addition" ? n.data : n)),
+                data,
             };
         }
     }
