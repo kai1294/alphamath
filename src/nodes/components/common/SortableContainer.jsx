@@ -20,7 +20,9 @@ export const SortableContainer = ({ elements, items }) => {
                     {elements.map((el, i) => (<div key={i}>{el}</div>))}
                 </Group>
             </SortableContext>
-            <DragOverlay>
+            <DragOverlay dropAnimation={{
+                duration: 500,
+            }}>
                 {activeIndex !== null && (
                     <NodeContext.Provider value={{ value: value.data[activeIndex] }}>
                         <NodeComponentRenderer />

@@ -42,7 +42,7 @@ const AdditionNode = () => {
     return (
         <SortableContainer
             elements={elements}
-            items={value.data.map((_, i) => `${id}:${i}`)}
+            items={value.data.map((_, i) => `${id}::${i}`)}
             />
     );
 };
