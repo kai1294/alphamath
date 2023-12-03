@@ -39,12 +39,10 @@ const MultiplicationNode = () => {
     }
 
     return (
-        <DndContext>
-            <Group ref={setNodeRef} wrap="nowrap">{elements.map((el, i) => {
-                el.key = i;
-                return el;
-            })}</Group>
-        </DndContext>
+        <SortableContainer
+            elements={elements}
+            items={value.data.map((_, i) => `${id}::${i}`)}
+            />
     );
 };
 

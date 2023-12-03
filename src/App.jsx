@@ -62,6 +62,18 @@ const DebugPanel = ({ value, onChange }) => {
                                         Nodes.Number(4),
                                         Nodes.Number(3),
                                     ]),
+                                }, {
+                                    name: "3*(5x-1)",
+                                    state: Nodes.Multiplication([
+                                        Nodes.Number(3),
+                                        Nodes.Addition([
+                                            Nodes.Multiplication([
+                                                Nodes.Number(5),
+                                                Nodes.Variable("x"),
+                                            ]),
+                                            Nodes.Negated(Nodes.Number(1))
+                                        ])
+                                    ])
                                 }].map((p, i) => (
                                     <Button key={i} variant="default" onClick={() => onChange(p.state)}>
                                         {p.name}

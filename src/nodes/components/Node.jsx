@@ -32,7 +32,7 @@ export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
         transform: CSS.Translate.toString(transform),
         transition,
         userSelect: "none",
-        opacity: isDragging ? 0 : 1,
+        opacity: isDragging ? 0.1 : 1,
     };
 
     let executeAction = (id, args) => {
@@ -48,10 +48,10 @@ export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
             setValue: onChange,
         }}>
             <NodeComponentRenderer
+                paperStyle={style}
                 paperProps={{
                     ...attributes,
                     ...listeners,
-                    style,
                     ref: setNodeRef,
                     onContextMenu: showContextMenu([
                         {
@@ -77,7 +77,7 @@ export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
     );
 };
 
-export const NodeComponentRenderer = ({ paperProps = {} }) => {
+export const NodeComponentRenderer = ({ paperProps = {}, paperStyle = {} }) => {
     const { value } = useContext(NodeContext);
     let [{ paperBorder }] = useContext(OptionsContext);
 
@@ -91,10 +91,13 @@ export const NodeComponentRenderer = ({ paperProps = {} }) => {
 
     return (
         <Paper
-            withBorder={paperBorder}
             p="xs"
-            px="xs"
-            {...paperProps}>
+            bg="transparent"
+            withBorder={paperBorder}
+            {...paperProps}
+            style={{
+                ...paperStyle,
+            }}>
             {el}
         </Paper>
     );

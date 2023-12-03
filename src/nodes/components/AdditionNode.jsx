@@ -1,12 +1,7 @@
 import { useContext } from "react";
 import { NodeContext, OptionsContext } from "../../contexts";
-import { DndContext, useDroppable } from "@dnd-kit/core";
 import { Plus } from "../../glyphs";
 import { NodeComponent } from "./Node";
-import { Group } from "@mantine/core";
-import { SortableContext, arrayMove, horizontalListSortingStrategy } from "@dnd-kit/sortable";
-import { useDndSensors } from "../../utils";
-import { notifications } from "@mantine/notifications";
 import { useId } from "@mantine/hooks";
 import { SortableContainer } from "./common/SortableContainer";
 

@@ -1,6 +1,14 @@
 import React from "react";
 
-const NodeContext = React.createContext();
+/**
+ * @type {React.Context<NodeContext>}
+ */
+const NodeContext = React.createContext({
+    value: null,
+    setValue: () => {},
+    executeAction: () => {},
+});
+
 const OptionsContext = React.createContext();
 
 export {
