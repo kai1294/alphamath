@@ -32,6 +32,7 @@ export const NodeComponent = ({ value, onChange }) => {
         transform: CSS.Translate.toString(transform),
         transition,
         userSelect: "none",
+        touchAction: "manipulation",
         //opacity: isDragging ? 0.1 : 1,
     };
 

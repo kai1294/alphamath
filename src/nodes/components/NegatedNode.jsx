@@ -3,6 +3,7 @@ import { NodeContext } from "../../contexts";
 import { Group } from "@mantine/core";
 import { Minus } from "../../glyphs";
 import { NodeComponent } from "./Node";
+import { DndContext } from "@dnd-kit/core";
 
 const NegatedNode = () => {
     let { value, setValue } = useContext(NodeContext);
@@ -10,13 +11,15 @@ const NegatedNode = () => {
     return (
         <Group wrap="nowrap">
             <Minus />
-            <NodeComponent
-                value={value.data}
-                onChange={(v) => setValue({
-                    ...value,
-                    data: v,
-                })}
-            />
+            <DndContext>
+                <NodeComponent
+                    value={value.data}
+                    onChange={(v) => setValue({
+                        ...value,
+                        data: v,
+                    })}
+                />
+            </DndContext>
         </Group>
     );
 }

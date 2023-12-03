@@ -1,4 +1,4 @@
-import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { DndContext, DragOverlay, closestCorners } from "@dnd-kit/core";
 import { SortableContext, arrayMove, horizontalListSortingStrategy } from "@dnd-kit/sortable";
 import { useDndSensors } from "../../../utils";
 import { useContext, useState } from "react";
@@ -16,7 +16,11 @@ export const SortableContainer = ({ elements, items }) => {
     }
 
     return (
-        <DndContext sensors={sensors} onDragEnd={onDragEnd} onDragStart={onDragStart}>
+        <DndContext
+            sensors={sensors}
+            onDragEnd={onDragEnd}
+            onDragStart={onDragStart}
+            collisionDetection={closestCorners}>
             <SortableContext
                 id={`${value.uuid}::container`}
                 strategy={horizontalListSortingStrategy}

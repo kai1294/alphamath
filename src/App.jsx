@@ -2,7 +2,6 @@ import { Accordion, Box, Button, Center, Container, Group, JsonInput, Paper, Spa
 import { useId, useSetState } from '@mantine/hooks';
 import { useState } from 'react'
 import { Nodes } from "./nodes";
-import { useDroppable } from '@dnd-kit/core';
 import { OptionsContext } from './contexts';
 import { NodeComponent } from './nodes/components/Node';
 import { OptionsPanel } from './app/OptionsPanel';
@@ -20,11 +19,11 @@ const App = () => {
     ]));
 
     return (
-        <Container h="100vh" w="100vh" fluid>
+        <Container h="100%" w="100%" fluid>
             <OptionsContext.Provider value={[options, setOptions]}>
-                <Center w="100vh" h="100%">
-
+                <Center w="100%" h="100%">
                     <Stack style={{ textAlign: "center" }}>
+                        <Space h="xl" />
                         <Group justify='center'>
                             <NodeComponent
                                 value={node}
@@ -37,7 +36,6 @@ const App = () => {
                             onChange={setNode}
                         />
                     </Stack>
-
                 </Center>
                 <OptionsPanel />
             </OptionsContext.Provider>
@@ -47,7 +45,7 @@ const App = () => {
 
 const DebugPanel = ({ value, onChange }) => {
     return (
-        <Paper withBorder p="md" w="50vw">
+        <Paper withBorder p="md">
             <Group>
                 <Text>Change state:</Text>
                 <Button.Group>
@@ -90,7 +88,7 @@ const DebugPanel = ({ value, onChange }) => {
                     ))}
                 </Button.Group>
             </Group>
-            <Accordion>
+            {/* <Accordion>
                 <Accordion.Item value="debug">
                     <Accordion.Control>Debug</Accordion.Control>
                     <Accordion.Panel>
@@ -103,7 +101,7 @@ const DebugPanel = ({ value, onChange }) => {
                         />
                     </Accordion.Panel>
                 </Accordion.Item>
-            </Accordion>
+            </Accordion> */}
         </Paper>
     );
 };
