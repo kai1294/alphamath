@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/alphamath/static/css/main.cf2f2a3f.css",
-    "main.js": "/alphamath/static/js/main.04a8ee72.js",
+    "main.js": "/alphamath/static/js/main.22b42ad4.js",
     "index.html": "/alphamath/index.html",
     "main.cf2f2a3f.css.map": "/alphamath/static/css/main.cf2f2a3f.css.map",
-    "main.04a8ee72.js.map": "/alphamath/static/js/main.04a8ee72.js.map"
+    "main.22b42ad4.js.map": "/alphamath/static/js/main.22b42ad4.js.map"
   },
   "entrypoints": [
     "static/css/main.cf2f2a3f.css",
-    "static/js/main.04a8ee72.js"
+    "static/js/main.22b42ad4.js"
   ]
 }
