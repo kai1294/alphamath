@@ -49,14 +49,3 @@ export {
     Nodes,
     actions,
 };
-
-((
-    Nodes.Addition([
-        Nodes.Multiplication([
-            Nodes.Negated(Nodes.Number(5)),
-            Nodes.Variable("x")
-        ]),
-        Nodes.Number(1),
-        Nodes.Negated(Nodes.Number(2))
-    ])
-))

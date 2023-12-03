@@ -21,7 +21,7 @@ const AdditionNode = () => {
         elements.push(<NodeComponent
             value={node}
             onChange={(v) => setValue({
-                type: value.type,
+                ...value,
                 data: value.data.map((t, i) => i == idx ? v : t)
             })} />);
 

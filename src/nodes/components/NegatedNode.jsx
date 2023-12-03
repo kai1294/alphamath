@@ -13,8 +13,8 @@ const NegatedNode = () => {
             <NodeComponent
                 value={value.data}
                 onChange={(v) => setValue({
-                    data: v,
                     ...value,
+                    data: v,
                 })}
             />
         </Group>
