@@ -2,6 +2,7 @@ import { Affix, Checkbox, Paper, Stack } from '@mantine/core';
 import { useContext } from 'react';
 import { match } from '../utils';
 import { OptionsContext } from '../contexts';
+import { useHotkeys } from '@mantine/hooks';
 
 export const OptionsPanel = () => {
     let [options, setOptions] = useContext(OptionsContext);
@@ -17,14 +18,19 @@ export const OptionsPanel = () => {
             id: "hidePlusIfNegated",
             label: "Hide + if subtraction",
         },
-    ].map((opt, i) => {
+    ].filter(x=>x).map((opt, i) => {
         return match(opt.type)({
             bool: () => <Checkbox
+                key={i}
                 checked={options[opt.id]}
                 label={opt.label}
-                onChange={(e) => setOptions({ [opt.id]: e.currentTarget.checked })} />
+                onChange={(e) => setOptions({ [opt.id]: e.currentTarget.checked })} />,
         });
     });
+
+    useHotkeys([
+        ["b", () => setOptions(({ paperBorder }) => ({ paperBorder: !paperBorder }))]
+    ])
 
     return (
         <Affix position={{ bottom: "1em", right: "1em" }}>

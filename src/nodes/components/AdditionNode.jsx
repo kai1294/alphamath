@@ -1,21 +1,19 @@
-import { useContext, useId } from "react";
+import { useContext } from "react";
 import { NodeContext, OptionsContext } from "../../contexts";
-import { useDroppable } from "@dnd-kit/core";
+import { DndContext, useDroppable } from "@dnd-kit/core";
 import { Plus } from "../../glyphs";
 import { NodeComponent } from "./Node";
 import { Group } from "@mantine/core";
+import { SortableContext, arrayMove, horizontalListSortingStrategy } from "@dnd-kit/sortable";
+import { useDndSensors } from "../../utils";
+import { notifications } from "@mantine/notifications";
+import { useId } from "@mantine/hooks";
+import { SortableContainer } from "./common/SortableContainer";
 
 const AdditionNode = () => {
     let [{ hidePlusIfNegated }] = useContext(OptionsContext);
     let { value, setValue } = useContext(NodeContext);
-    // Dnd kit stuff
     let id = useId();
-    const { isOver, setNodeRef } = useDroppable({
-        id,
-        data: {
-            value,
-        },
-    });
 
     // Node stuff
     let elements = [];
@@ -31,6 +29,7 @@ const AdditionNode = () => {
         //elements.push(<Gap visible={isOver} />);
 
         elements.push(<NodeComponent
+            dndId={`${id}::${idx}`}
             value={node}
             onChange={(v) => setValue({
                 type: value.type,
@@ -41,9 +40,10 @@ const AdditionNode = () => {
     }
 
     return (
-        <Group ref={setNodeRef} wrap="nowrap" bg={isOver ? "dark" : ""}>
-            {elements.map((el, i) => (<div key={i}>{el}</div>))}
-        </Group>
+        <SortableContainer
+            elements={elements}
+            items={value.data.map((_, i) => `${id}:${i}`)}
+            />
     );
 };
 

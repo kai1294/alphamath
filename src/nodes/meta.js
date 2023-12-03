@@ -1,6 +1,23 @@
 import { match } from "../utils"
 
+export const isContainer = (node) => {
+    return match(node.type)({
+        Addition: true,
+        Multiplication: true,
+        _: false,
+    });
+};
+
+export const isWrapper = (node) => {
+    return match(node.type)({
+        Negated: true,
+        _: false,
+    });
+};
+
 export const shouldParenthesis = (container, child) => {
+    if (container.type == child.type) return true;
+
     return match(container.type)([
         Addition => match(child.type)([
             Variable => false,

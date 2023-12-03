@@ -14,16 +14,25 @@ import VariableNode from "./VariableNode";
 import AdditionNode from "./AdditionNode";
 import MultiplicationNode from "./MultiplicationNode";
 import NegatedNode from './NegatedNode';
+import { useSortable } from "@dnd-kit/sortable";
 
-export const NodeComponent = ({ value, onChange }) => {
-    let [{ paperBorder }] = useContext(OptionsContext);
+export const NodeComponent = ({ value, onChange, dndId = "root" }) => {
     let { showContextMenu } = useContextMenu();
-    let id = useId();
-    const { attributes, listeners, setNodeRef, transform } = useDraggable({
-        id,
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging,
+    } = useSortable({
+        id: dndId,
     });
     const style = {
         transform: CSS.Translate.toString(transform),
+        transition,
+        userSelect: "none",
+        opacity: isDragging ? 0 : 1,
     };
 
     let executeAction = (id, args) => {
@@ -31,6 +40,46 @@ export const NodeComponent = ({ value, onChange }) => {
         let newValue = action.apply(value);
         onChange(newValue);
     };
+
+    return (
+        <NodeContext.Provider value={{
+            executeAction,
+            value,
+            setValue: onChange,
+        }}>
+            <NodeComponentRenderer
+                paperProps={{
+                    ...attributes,
+                    ...listeners,
+                    style,
+                    ref: setNodeRef,
+                    onContextMenu: showContextMenu([
+                        {
+                            key: "info",
+                            title: `Node::${value.type}`,
+                            icon: <IconInfoCircle size={16} />,
+                            disabled: true,
+                            onClick: () => { },
+                        },
+                        {
+                            key: "divider",
+                        },
+                        ...actions.map(a => ({
+                            key: a.id,
+                            icon: a.icon,
+                            title: a.name,
+                            onClick: () => executeAction(a.id),
+                        })),
+                    ]),
+                }}
+                />
+        </NodeContext.Provider>
+    );
+};
+
+export const NodeComponentRenderer = ({ paperProps = {} }) => {
+    const { value } = useContext(NodeContext);
+    let [{ paperBorder }] = useContext(OptionsContext);
 
     let el = match(value.type)({
         Number: () => <NumberNode />,
@@ -41,41 +90,12 @@ export const NodeComponent = ({ value, onChange }) => {
     });
 
     return (
-        <NodeContext.Provider value={{
-            executeAction,
-            value,
-            setValue: onChange,
-        }}>
-            <Paper
-                withBorder={paperBorder}
-                p="xs"
-                px="xs"
-                onContextMenu={showContextMenu([
-                    {
-                        key: "info",
-                        title: `Node::${value.type}`,
-                        icon: <IconInfoCircle size={16} />,
-                        disabled: true,
-                        onClick: () => { },
-                    },
-                    {
-                        key: "divider",
-                    },
-                    ...actions.map(a => ({
-                        key: a.id,
-                        icon: a.icon,
-                        title: a.name,
-                        onClick: () => executeAction(a.id),
-                    })),
-                ])}
-                {...attributes}
-                {...listeners}
-                style={style}
-                ref={setNodeRef}>
-                <DndContext>
-                    {el}
-                </DndContext>
-            </Paper>
-        </NodeContext.Provider>
+        <Paper
+            withBorder={paperBorder}
+            p="xs"
+            px="xs"
+            {...paperProps}>
+            {el}
+        </Paper>
     );
-};
+}
