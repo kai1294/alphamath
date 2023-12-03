@@ -1,11 +1,11 @@
 import { KeyboardSensor, MouseSensor, PointerSensor, TouchSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 
-const matches = (f, p) => f.toString()
+export const matches = (f, p) => f.toString()
     .replace(/[ ]/g, "")
     .split("=>")[0] == (p.length == 1 ? p : `(${p.join(", ")})`);
 
-const match = (...v) => {
+export const match = (...v) => {
     let matcher = (o) => {
         let fn;
 
@@ -25,7 +25,7 @@ const match = (...v) => {
     return matcher;
 };
 
-const useDndSensors = () => {
+export const useDndSensors = () => {
     return useSensors(
         useSensor(MouseSensor, {
             activationConstraint: {
@@ -43,8 +43,22 @@ const useDndSensors = () => {
     );
 };
 
-export {
-    match,
-    matches,
-    useDndSensors,
+export const primeFactors = (n) => {
+	const factors = [];
+	let divisor = 2;
+
+	while (n >= 2) {
+		if (n % divisor == 0) {
+			factors.push(divisor);
+			n = n / divisor;
+		} else {
+			divisor++;
+		}
+	}
+
+	return factors;
 };
+
+export const isPrime = (n) => {
+    return primeFactors(n).length <= 1;
+}

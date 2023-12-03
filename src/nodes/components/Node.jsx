@@ -7,7 +7,7 @@ import { useContextMenu } from "mantine-contextmenu";
 import { useContext } from "react";
 import { NodeContext, OptionsContext } from "../../contexts";
 import { actions } from "../../nodes";
-import { match } from "../../utils";
+import { isPrime, match } from "../../utils";
 
 import NumberNode from "./NumberNode";
 import VariableNode from "./VariableNode";
@@ -62,6 +62,14 @@ export const NodeComponent = ({ value, onChange }) => {
                             disabled: true,
                             onClick: () => { },
                         },
+                        ...((value.type == "Number" && isPrime(value.data)) ? [
+                            {
+                                key: "info-prime",
+                                title: `${value.data} is a prime number`,
+                                onClick: ()=>{},
+                                disabled: true,
+                            }
+                        ] : []),
                         {
                             key: "divider",
                         },
