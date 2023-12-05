@@ -20,7 +20,7 @@ const filter = (node) => {
     return (node.type == "Multiplication")
         && node.data.length == 2
         && node.data.filter(n => ["Number", "Variable"].includes(n.type)).length == 1
-        && node.data.filter(n => ["Multiplication", "Addition"].includes(n.type)).length == 1;
+        && node.data.filter(n => ["Addition"].includes(n.type)).length == 1;
 };
 
 export default {
