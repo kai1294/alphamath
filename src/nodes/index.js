@@ -43,6 +43,11 @@ const Nodes = {
      * @returns {MathNode}
     */
     Root: (n) => createNode("Root", n),
+    /**
+     * @param {string} name
+     * @param {MathNode[]} args
+    */
+    Function: (name, args) => createNode("Function", { name, args }),
 }
 
 export {
