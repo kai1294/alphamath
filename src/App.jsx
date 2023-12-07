@@ -58,11 +58,11 @@ const DebugPanel = ({ value, onChange }) => {
                             Nodes.Number(3),
                         ]),
                     }, {
-                        name: "2*3*5",
+                        name: "2*3*200",
                         state: Nodes.Multiplication([
                             Nodes.Number(2),
                             Nodes.Number(3),
-                            Nodes.Number(5),
+                            Nodes.Number(200),
                         ]),
                     }, {
                         name: "35+45",
@@ -89,7 +89,7 @@ const DebugPanel = ({ value, onChange }) => {
                     ))}
                 </Button.Group>
             </Group>
-            {/* <Accordion>
+            <Accordion>
                 <Accordion.Item value="debug">
                     <Accordion.Control>Debug</Accordion.Control>
                     <Accordion.Panel>
@@ -99,10 +99,13 @@ const DebugPanel = ({ value, onChange }) => {
                             formatOnBlur
                             disabled
                             value={JSON.stringify(value)}
+                            onChange={(v) => {
+                                try { let value = JSON.parse(v); onChange(value) } catch() {}
+                            }}
                         />
                     </Accordion.Panel>
                 </Accordion.Item>
-            </Accordion> */}
+            </Accordion>
         </Paper>
     );
 };
