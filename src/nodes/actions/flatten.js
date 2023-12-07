@@ -6,14 +6,12 @@ const apply = (node) => {
             return node.data[0];
         };
 
-        if (node.type == "Addition") {
-            let data = node.data.flatMap(n => apply(n.type == "Addition" ? n.data : n));
+        let data = node.data.flatMap(n => apply(n.type == node.type ? n.data : n));
 
-            return {
-                ...node,
-                data,
-            };
-        }
+        return data.length == 1 ? data[0] : {
+            ...node,
+            data,
+        };
     }
 
     return node;

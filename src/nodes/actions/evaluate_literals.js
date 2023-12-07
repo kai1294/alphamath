@@ -64,6 +64,18 @@ const apply = (node) => {
 
             return list.length == 1 ? list[0] : Nodes.Multiplication(list);
         },
+        Division: () => {
+            let [a, b] = node.data.map(apply);
+
+            if (a.type == "Number" && b.type == "Number" && Number.isInteger(a.data/b.data)) {
+                return Nodes.Number(a.data/b.data);
+            }
+
+            return {
+                ...node,
+                data: [a, b],
+            };
+        },
         _: () => node,
     });
 }
@@ -73,10 +85,11 @@ const containsLiteral = (node) => {
         return node.data.filter(n => n.type == "Number" || containsLiteral(n)).length > 1;
     }
 
-    match(node.type)({
+    return match(node.type)({
         Number: true,
         Variable: false,
         Negated: () => containsLiteral(node.data),
+        Division: () => node.data.some(containsLiteral) || Number.isInteger(node.data[0]/node.data[1]),
     })
 };
 

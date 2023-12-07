@@ -82,6 +82,15 @@ const DebugPanel = ({ value, onChange }) => {
                                 Nodes.Negated(Nodes.Number(1))
                             ])
                         ])
+                    }, {
+                        name: "(10+5)/5",
+                        state: Nodes.Division([
+                            Nodes.Addition([
+                                Nodes.Number(10),
+                                Nodes.Number(5),
+                            ]),
+                            Nodes.Number(5),
+                        ]),
                     }].map((p, i) => (
                         <Button key={i} variant="default" onClick={() => onChange(p.state)}>
                             {p.name}
@@ -97,7 +106,6 @@ const DebugPanel = ({ value, onChange }) => {
                             label="State"
                             autosize
                             formatOnBlur
-                            disabled
                             value={JSON.stringify(value)}
                             onChange={(v) => {
                                 try {

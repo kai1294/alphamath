@@ -1,4 +1,4 @@
-import { Text } from "@mantine/core";
+import { Divider, Text } from "@mantine/core";
 
 const TextGlyph = ({ text }) => {
     return (
@@ -26,6 +26,10 @@ const CloseParen = () => {
     return <TextGlyph text=")" />
 }
 
+const DivisionLine = () => {
+    return <Divider style={{ "--_divider-color": "var(--mantine-color-text)" }} />
+}
+
 export {
     TextGlyph,
     Plus,
@@ -33,4 +37,5 @@ export {
     Dot,
     OpenParen,
     CloseParen,
+    DivisionLine,
 };

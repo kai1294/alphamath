@@ -15,6 +15,7 @@ import AdditionNode from "./AdditionNode";
 import MultiplicationNode from "./MultiplicationNode";
 import NegatedNode from './NegatedNode';
 import { useSortable } from "@dnd-kit/sortable";
+import DivisionNode from "./DivisionNode";
 
 export const NodeComponent = ({ value, onChange }) => {
     let { showContextMenu } = useContextMenu();
@@ -96,6 +97,7 @@ export const NodeComponentRenderer = ({ paperProps = {}, paperStyle = {} }) => {
         Addition: () => <AdditionNode />,
         Negated: () => <NegatedNode />,
         Multiplication: () => <MultiplicationNode />,
+        Division: () => <DivisionNode />,
     });
 
     return (
