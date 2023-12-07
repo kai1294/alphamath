@@ -100,7 +100,12 @@ const DebugPanel = ({ value, onChange }) => {
                             disabled
                             value={JSON.stringify(value)}
                             onChange={(v) => {
-                                try { let value = JSON.parse(v); onChange(value) } catch() {}
+                                try {
+                                    let value = JSON.parse(v);
+                                    onChange(value);
+                                } catch(e) {
+                                    //noop
+                                }
                             }}
                         />
                     </Accordion.Panel>
