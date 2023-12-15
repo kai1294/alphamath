@@ -6,7 +6,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import { useContextMenu } from "mantine-contextmenu";
 import { useContext } from "react";
 import { NodeContext, OptionsContext } from "../../contexts";
-import { actions } from "../../nodes";
+import { actions } from "..";
 import { isPrime, match } from "../../utils";
 
 import NumberNode from "./NumberNode";
