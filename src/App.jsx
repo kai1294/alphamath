@@ -5,13 +5,19 @@ import { Nodes } from "./nodes";
 import { OptionsContext } from './contexts';
 import { NodeComponent } from './nodes/components/Node';
 import { OptionsPanel } from './app/OptionsPanel';
+import { MapInteractionCSS } from 'react-map-interaction';
+import { GlobalTransformProvider } from './panels/core/GlobalTransform';
 
-const App = () => {
-    let [options, setOptions] = useSetState({
-        paperBorder: true,
-        hidePlusIfNegated: false,
-    });
+const WorkspaceView = () => {
 
+    return (
+        <GlobalTransformProvider>
+            <WorkspaceCanvas />
+        </GlobalTransformProvider>
+    )
+}
+
+const WorkspaceCanvas = () => {
     let [node, setNode] = useState(Nodes.Addition([
         Nodes.Number(1),
         Nodes.Number(4),
@@ -19,28 +25,36 @@ const App = () => {
     ]));
 
     return (
-        <Container h="100%" w="100%" fluid>
-            <OptionsContext.Provider value={[options, setOptions]}>
-                <Center w="100%" h="100%">
-                    <Stack style={{ textAlign: "center" }}>
-                        <Space h="xl" />
-                        <Group justify='center'>
-                            <NodeComponent
-                                value={node}
-                                onChange={setNode}
-                            />
-                        </Group>
-                        <Space h="xl" />
-                        <DebugPanel
-                            value={node}
-                            onChange={setNode}
-                        />
-                    </Stack>
+        <Stack style={{ textAlign: "center" }}>
+            <Space h="xl" />
+            <Group justify='center'>
+                <NodeComponent
+                    value={node}
+                    onChange={setNode}
+                />
+            </Group>
+            <Space h="xl" />
+            <DebugPanel
+                value={node}
+                onChange={setNode}
+            />
+        </Stack>
+    );
+}
 
-                </Center>
-                <OptionsPanel />
-            </OptionsContext.Provider>
-        </Container>
+const App = () => {
+    let [options, setOptions] = useSetState({
+        paperBorder: true,
+        hidePlusIfNegated: false,
+    });
+
+    return (
+        <OptionsContext.Provider value={[options, setOptions]}>
+            <Box w="100%" h="100%">
+                <WorkspaceView />
+            </Box>
+            <OptionsPanel />
+        </OptionsContext.Provider>
     )
 }
 
@@ -91,6 +105,9 @@ const DebugPanel = ({ value, onChange }) => {
                             ]),
                             Nodes.Number(5),
                         ]),
+                    }, {
+                        name: "----1",
+                        state: Nodes.Negated(Nodes.Negated(Nodes.Negated(Nodes.Negated(Nodes.Number(1))))),
                     }].map((p, i) => (
                         <Button key={i} variant="default" onClick={() => onChange(p.state)}>
                             {p.name}
@@ -111,7 +128,7 @@ const DebugPanel = ({ value, onChange }) => {
                                 try {
                                     let value = JSON.parse(v);
                                     onChange(value);
-                                } catch(e) {
+                                } catch (e) {
                                     //noop
                                 }
                             }}
