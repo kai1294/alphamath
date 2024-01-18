@@ -5,25 +5,24 @@ export const matches = (f, p) => f.toString()
     .replace(/[ ]/g, "")
     .split("=>")[0] == (p.length == 1 ? p : `(${p.join(", ")})`);
 
-export const match = (...v) => {
-    let matcher = (o) => {
-        let fn;
+export const match =
+    <T extends string>(v: T) =>
+    <M extends Record<T, V>>(o: M): ((M[T] extends (() => A) ? A : M[T])) => {
+    let fn;
 
-        if (Array.isArray(o)) {
-            fn = (o.find(f => matches(f, v)) || o.find(f => matches(f, "_")))
-        } else {
-            fn = (o[v.join(", ")] || o._)
-        };
-
-        if (typeof fn == "function") {
-            return fn(...v);
-        } else {
-            return fn;
-        }
+    if (Array.isArray(o)) {
+        fn = (o.find(f => matches(f, v)) || o.find(f => matches(f, "_")))
+    } else {
+        fn = (o[v] || o._)
     };
 
-    return matcher;
+    if (typeof fn == "function") {
+        return fn(v);
+    } else {
+        return fn;
+    }
 };
+
 
 export const useDndSensors = () => {
     return useSensors(

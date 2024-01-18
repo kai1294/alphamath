@@ -1,48 +1,49 @@
-interface ContainerNode {
+export interface ContainerNode {
     data: MathNode[],
 }
 
-type NumberNode = {
+export type NumberNode = {
     type: "Number"
     data: Number
 }
 
-type VariableNode = {
+export type VariableNode = {
     type: "Variable"
     data: Number
 }
 
-type AdditionNode = {
+export type AdditionNode = {
     type: "Addition"
     data: MathNode[]
 }
 
-type MultiplicationNode = {
+export type MultiplicationNode = {
     type: "Multiplication"
     data: MathNode[]
 }
 
-type NegatedNode = {
+export type NegatedNode = {
     type: "Negated"
     data: MathNode
 }
 
-type DivisionNode = {
+export type DivisionNode = {
     type: "Division"
     data: [MathNode, MathNode]
 }
 
-type ExponentiationNode = {
+export type ExponentiationNode = {
     type: "Exponentiation"
     data: [MathNode, MathNode]
 }
 
-type RootNode = {
+export type RootNode = {
     type: "Root"
     data: [MathNode, MathNode]
 }
 
-type MathNode = NumberNode
+export type MathNode =
+    NumberNode
     | VariableNode
     | AdditionNode
     | NegatedNode
@@ -51,7 +52,7 @@ type MathNode = NumberNode
     | ExponentiationNode
     | RootNode;
 
-type NodeContext = {
+export type NodeContext = {
     value: MathNode,
     setValue: (newValue: MathNode) => void,
     executeAction: () => void,
