@@ -16,8 +16,12 @@ import MultiplicationNode from "./MultiplicationNode";
 import NegatedNode from './NegatedNode';
 import { useSortable } from "@dnd-kit/sortable";
 import DivisionNode from "./DivisionNode";
+import { MathNode } from "../../types";
 
-export const NodeComponent = ({ value, onChange }) => {
+export const NodeComponent = ({ value, onChange }: {
+    value: MathNode,
+    onChange: (n: MathNode) => void,
+}) => {
     let { showContextMenu } = useContextMenu();
     const {
         attributes,
@@ -30,15 +34,15 @@ export const NodeComponent = ({ value, onChange }) => {
         id: value.uuid,
     });
     const style = {
-        transform: CSS.Translate.toString(transform),
+        //transform: CSS.Translate.toString(transform),
         transition,
         userSelect: "none",
         touchAction: "manipulation",
         opacity: isDragging ? 0.1 : 1,
     };
 
-    let executeAction = (id, args) => {
-        let action = actions.find(a => a.id == id);
+    let executeAction = (id: string) => {
+        let action = actions.find(a => a.id == id)!;
         let newValue = action.apply(value);
         onChange(newValue);
     };

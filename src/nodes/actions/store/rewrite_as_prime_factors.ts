@@ -1,5 +1,5 @@
-import { Nodes } from "..";
-import { isPrime, primeFactors } from "../../utils";
+import { Nodes } from "../..";
+import { isPrime, primeFactors } from "../../../utils";
 
 const apply = (node) => {
 	let primes = primeFactors(node.data + 0).map(p => Nodes.Number(p));

@@ -1,4 +1,4 @@
-import { isContainer } from "../meta";
+import { isContainer } from "../../meta";
 
 const apply = (node) => {
     if (isContainer(node)) {

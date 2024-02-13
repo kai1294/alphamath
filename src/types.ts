@@ -43,14 +43,16 @@ export type RootNode = {
 }
 
 export type MathNode =
-    NumberNode
+    (NumberNode
     | VariableNode
     | AdditionNode
     | NegatedNode
     | MultiplicationNode
     | DivisionNode
     | ExponentiationNode
-    | RootNode;
+    | RootNode) & {
+        uuid: string;
+    };
 
 export type NodeContext = {
     value: MathNode,

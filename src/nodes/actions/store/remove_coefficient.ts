@@ -1,6 +1,6 @@
-import { Nodes } from "..";
-import { match } from "../../utils";
-import { isContainer } from "../meta";
+import { Nodes } from "../..";
+import { match } from "../../../utils";
+import { isContainer } from "../../meta";
 
 const apply = (node) => {
     let data = node.data.filter(n => n.node != "Number" && n.data != 1);

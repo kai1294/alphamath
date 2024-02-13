@@ -11,6 +11,7 @@ import i18n from "./i18n";
 
 import '@mantine/core/styles.css';
 import 'mantine-contextmenu/styles.css';
+import "./style.css";
 
 const theme = createTheme({
   colors: {
@@ -29,7 +30,7 @@ const theme = createTheme({
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root')!);
 root.render(<MantineProvider defaultColorScheme='dark' theme={theme}>
         <I18nextProvider i18n={ i18n }>
             <Notifications />
