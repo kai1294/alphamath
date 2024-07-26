@@ -1,12 +1,13 @@
 import { ActionIcon, Box, Button, Stack } from "@mantine/core";
-import { useContext, useRef, useState } from "react";
+import { PropsWithChildren, useContext, useRef, useState } from "react";
 import { Transform, TransformProvider } from "./Transform";
-import { Icon12Hours, IconMenu2 } from "@tabler/icons-react";
+import { Icon12Hours, IconCrosshair, IconMenu2 } from "@tabler/icons-react";
 import { GlobalTransform } from "./GlobalTransform";
-import { useHandle } from "./useHandle";
 import { Panel } from "./Panel";
 
-export const WorkspaceView = () => {
+export const WorkspaceView = ({
+    children
+}: PropsWithChildren) => {
     const [scale, setScale] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const workspaceRef = useRef(null);
@@ -66,33 +67,7 @@ export const WorkspaceView = () => {
                         left: 0,
                     }}
                 >
-                    <TransformProvider initial={{ x: 0, y: 20 }}>
-                        <Icon12Hours />
-                    </TransformProvider>
-
-                    <TransformProvider>
-                        <Stack>
-                        <Button variant="light">
-                            Spawn
-                        </Button>
-                        <Button variant="light">
-                            Spawn
-                        </Button>
-                        <Button variant="light">
-                            Spawn
-                        </Button>
-                        <Button variant="light">
-                            Spawn
-                        </Button>
-                        <Button variant="light">
-                            Spawn
-                        </Button>
-                        </Stack>
-                    </TransformProvider>
-                    
-                    <Panel>
-                        <PanelTest />
-                    </Panel>
+                    {children}
                 </Box>
             </Box>
         </GlobalTransform.Provider>
@@ -103,9 +78,7 @@ const PanelTest = () => {
     const { x, y } = useContext(Transform);
     
     return (
-        <Box
-            bg="dark.1"
-        >
+        <Box>
             {x}, {y}
         </Box>
     )

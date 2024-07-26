@@ -1,12 +1,24 @@
-import React from "react";
-import { IGlobalTransform } from "./types";
+import React, { PropsWithChildren, useState } from "react";
 
-const GlobalTransform = React.createContext<IGlobalTransform>({
+export interface IGlobalTransform {
+    x: number;
+    y: number;
+    scale: number;
+}
+
+export const GlobalTransform = React.createContext<IGlobalTransform>({
     x: 0,
     y: 0,
     scale: 0,
 });
 
-export {
-    GlobalTransform,
+export const GlobalTransformProvider = ({ children }: PropsWithChildren) => {
+    const [scale, setScale] = useState(1);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+
+    return (
+        <GlobalTransform.Provider value={{ scale, ...position }}>
+            {children}
+        </GlobalTransform.Provider>
+    )
 }
