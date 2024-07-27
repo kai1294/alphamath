@@ -1,31 +1,30 @@
 import React, { PropsWithChildren, useState } from "react";
-import { ITransform } from "./types";
+import { ITransform, Position, WithSetters } from "./types";
 
-const Transform = React.createContext<ITransform>({
-    x: 0,
-    y: 0,
-    setX: (x) => x,
-    setY: (x) => x,
+const Transform = React.createContext<WithSetters<ITransform>>({
+    position: { x: 0, y: 0 },
+    setPosition: () => {},
 });
 
 const TransformProvider = ({
     children,
     initial,
 }: {
-    initial?: Partial<ITransform>,
+    initial?: Partial<Position>,
 } & PropsWithChildren) => {
-    let [x, setX] = useState(initial?.x || 0);
-    let [y, setY] = useState(initial?.y || 0);
+    let [position, setPosition] = useState({
+        x: 0,
+        y: 0,
+        ...initial,
+    });
     
     return (
         <Transform.Provider value={{
-            x,
-            y,
-            setX,
-            setY,
+            position,
+            setPosition,
         }}>
             <div style={{
-                transform: `translate(${x}px, ${y}px)`,
+                transform: `translate(${position.x}px, ${position.y}px)`,
                 position: "absolute"
             }}>
                 {children}

@@ -1,85 +1,51 @@
-import { ActionIcon, Box, Button, Stack } from "@mantine/core";
+import { Box } from "@mantine/core";
 import { PropsWithChildren, useContext, useRef, useState } from "react";
-import { Transform, TransformProvider } from "./Transform";
-import { Icon12Hours, IconCrosshair, IconMenu2 } from "@tabler/icons-react";
 import { GlobalTransform } from "./GlobalTransform";
-import { Panel } from "./Panel";
+import { useRelativeDrag } from "./useHandle";
 
 export const WorkspaceView = ({
     children
 }: PropsWithChildren) => {
-    const [scale, setScale] = useState(1);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const { position, setPosition, scale, setScale } = useContext(GlobalTransform);
     const workspaceRef = useRef(null);
-    const [isPanning, setIsPanning] = useState(false);
-    const [startPanPosition, setStartPanPosition] = useState({ x: 0, y: 0 });
-    const [mouseStart, setMouseStart] = useState({ x: 0, y: 0 });
 
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
         e.preventDefault();
         const delta = e.deltaY;
         const newScale = scale - delta / 500;
-        setScale(Math.max(0.1, newScale)); // Limit the zoom out level
+        const clamped = Math.max(0.1, Math.min(2, newScale));
+        setScale(clamped);
     };
 
-    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-        setIsPanning(true);
-        setMouseStart({ x: e.clientX, y: e.clientY });
-        setStartPanPosition({ ...position });
-    };
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!isPanning) return;
-        const dx = e.clientX - mouseStart.x;
-        const dy = e.clientY - mouseStart.y;
-        setPosition({
-            x: startPanPosition.x + dx,
-            y: startPanPosition.y + dy,
-        });
-    };
-
-    const handleMouseUp = () => {
-        setIsPanning(false);
-    };
+    const { isDragging: isPanning, props } = useRelativeDrag({
+        value: position,
+        onChange: setPosition,
+        scale: 1,
+    });
 
     return (
-        <GlobalTransform.Provider value={{ ...position, scale }}>
+        <Box
+            onWheel={handleWheel}
+            {...props}
+            w="100vw"
+            h="100vh"
+            style={{
+                overflow: "hidden",
+                position: 'relative',
+                cursor: isPanning ? "grabbing" : "grab",
+            }}>
             <Box
-                onWheel={handleWheel}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                w="100vw"
-                h="100vh"
+                ref={workspaceRef}
                 style={{
-                    overflow: "hidden",
-                    position: 'relative',
-                    cursor: isPanning ? "grabbing" : "grab",
-                }}>
-                <Box
-                    ref={workspaceRef}
-                    style={{
-                        transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-                        transformOrigin: '0 0',
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                    }}
-                >
-                    {children}
-                </Box>
+                    transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
+                    transformOrigin: '0 0',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                }}
+            >
+                {children}
             </Box>
-        </GlobalTransform.Provider>
-    )
-}
-
-const PanelTest = () => {
-    const { x, y } = useContext(Transform);
-    
-    return (
-        <Box>
-            {x}, {y}
         </Box>
     )
 }

@@ -4,6 +4,7 @@
   "description": "math (real)",
   "main": "index.js",
   "homepage": "https://thealan404.github.io/alphamath",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

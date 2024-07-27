@@ -1,18 +1,27 @@
 import React from "react";
 
-
-
-export interface ITransform {
+export interface Position {
     x: number;
     y: number;
-    setX: React.Dispatch<React.SetStateAction<number>>;
-    setY: React.Dispatch<React.SetStateAction<number>>;
 };
 
-export interface ISize {
-    w: number;
-    h: number;
+export type WithSetters<T extends Record<string, any>> = T & {
+    [P in keyof T as `set${Capitalize<string & P>}`]: (v: T[P]) => void;
+};
+
+export interface ITransform {
+    position: Position;
+};
+
+export interface Size {
+    w: number | "auto";
+    h: number | "auto";
 }
+
+export type IWindow = {
+    position: Position;
+    size: Size;
+};
 
 export type IPanel<Type extends string, Data> = { type: Type, data: Data };
 
