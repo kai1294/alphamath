@@ -1,7 +1,7 @@
 import { Stack, TextInput } from "@mantine/core";
-import { INotePanel, PanelProps } from "../../workspace/types";
+import { PanelProps } from "../../types/app/panels";
 
-export const NotePanel = ({ data, setData }: PanelProps<INotePanel>) => {
+export const NotePanel = ({ data, setData }: PanelProps<"note">) => {
     return (
         <Stack>
             <TextInput

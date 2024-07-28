@@ -2,6 +2,7 @@ import { useHotkeys, useWindowEvent } from "@mantine/hooks";
 import { useContext, useState } from "react";
 import { Position } from "../types/scalar";
 import { GlobalTransform } from "../workspace/GlobalTransform";
+import { mouseButtons } from "../utils/input";
 
 export const useRelativeDrag = <T,>({
     value, onChange, scale,
@@ -9,6 +10,7 @@ export const useRelativeDrag = <T,>({
     value: Position;
     onChange: (pos: Position) => void;
     scale?: number;
+    disabled?: boolean;
 }) => {
     const { scale: defaultScale } = useContext(GlobalTransform);
     
@@ -20,7 +22,12 @@ export const useRelativeDrag = <T,>({
 
     useWindowEvent("mousemove", (e) => {
         if (!isDragging) return;
+        if (!mouseButtons(e).left) return setIsDragging(false);
         onInputMove({ x: e.clientX, y: e.clientY });
+    });
+
+    useWindowEvent("mouseup", (e) => {
+        setIsDragging(false);
     });
 
     useWindowEvent("touchmove", (e) => {
@@ -44,16 +51,13 @@ export const useRelativeDrag = <T,>({
         isDragging,
         props: {
             onMouseDown: (e: React.MouseEvent<HTMLElement>) => {
+                if (!mouseButtons(e).left) return;
                 e.stopPropagation();
                 e.preventDefault();
                 (document.activeElement as HTMLElement)?.blur();
                 setIsDragging(true);
                 setStart({ x: e.clientX, y: e.clientY });
                 setStartDragPosition(value);
-            },
-
-            onMouseUp: () => {
-                setIsDragging(false);
             },
 
             onTouchStart: (e: React.TouchEvent<HTMLElement>) => {

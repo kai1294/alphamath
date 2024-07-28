@@ -1,8 +1,8 @@
-import { AnyPanel } from "./panels";
-import { Position, Size } from "./scalar";
+import { IPanel } from "./panels";
+import { Position, Size } from "../scalar";
 
 export interface WorkspacePanel {
-    panel: AnyPanel;
+    panel: IPanel;
     size: Size;
     position: Position;
 };

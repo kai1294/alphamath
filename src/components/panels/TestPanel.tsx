@@ -1,7 +1,6 @@
 import { Stack } from "@mantine/core";
-import { ITestPanel, PanelProps } from "../../workspace/types";
 
-export const TestPanel = ({}: PanelProps<ITestPanel>) => {
+export const TestPanel = () => {
     return (
         <Stack>
             Hello World!
