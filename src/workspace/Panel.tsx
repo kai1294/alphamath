@@ -10,7 +10,10 @@ export interface GenericPanelProps {
     autoSize?: boolean;
 }
 
-export const Panel = ({ children, ...props }: GenericPanelProps & PropsWithChildren) => {
+export const Panel = ({
+    children,
+    ...props
+}: GenericPanelProps & PropsWithChildren) => {
     return (
         <TransformProvider>
             <PanelContent {...props}>

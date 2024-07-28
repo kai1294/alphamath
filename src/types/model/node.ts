@@ -9,4 +9,5 @@ export type MathNode = Enum<{
     Exponentiation: [MathNode, MathNode];
     Division: [MathNode, MathNode];
     Root: [MathNode, MathNode];
+    Function: [MathNode, MathNode];
 }>;

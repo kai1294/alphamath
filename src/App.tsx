@@ -7,6 +7,7 @@ import { GlobalTransformProvider } from "./workspace/GlobalTransform";
 import { Textarea, TextInput } from "@mantine/core";
 import { BackgroundGrid } from "./components/detail/BackgroundGrid";
 import { ToolProvider } from "./workspace/ToolContext";
+import { NodeComponent } from "./components/math/node/NodeComponent";
 
 const App = () => {
     return (
@@ -15,6 +16,13 @@ const App = () => {
                 <WorkspaceView>
                     <TransformProvider defaultValue={{ x: -25, y: -25 }}>
                         <IconCrosshair size={50} />
+                    </TransformProvider>
+
+                    <TransformProvider defaultValue={{ x: 100, y: 100 }}>
+                        <NodeComponent
+                            node={{ type: "Number", data: 1 }}
+                            setNode={() => {}}
+                        />
                     </TransformProvider>
                 </WorkspaceView>
                 
