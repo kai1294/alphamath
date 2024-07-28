@@ -1,6 +1,11 @@
 import React, { PropsWithChildren, useState } from "react";
-import { ITransform, Position, WithSetters } from "./types";
+import { Position } from "../types/scalar";
+import { WithSetters } from "../types/utils";
 import { useUncontrolled } from "@mantine/hooks";
+
+export interface ITransform {
+    position: Position;
+}
 
 const Transform = React.createContext<WithSetters<ITransform>>({
     position: { x: 0, y: 0 },

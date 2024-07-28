@@ -5,7 +5,7 @@ import { useMouse } from "@mantine/hooks";
 import { useMousePosition } from "../../hooks/useMousePosition";
 
 export const MainOverlay = () => {
-    const { position, scale, setPosition, setScale } = useContext(GlobalTransform);
+    const { position, scale, reset } = useContext(GlobalTransform);
     const mouse = useMousePosition();
     
     return (
@@ -18,12 +18,9 @@ export const MainOverlay = () => {
                         Mouse: ({mouse.x}, {mouse.y})
                     </Text>
                     <Button
-                        style={{ pointerEvents: "all" }}
+                        className="ptr"
                         variant="light"
-                        onClick={() => {
-                            setPosition({ x: window.innerWidth/2, y: window.innerHeight/2 });
-                            setScale(1);
-                        }}
+                        onClick={reset}
                     >
                         Center
                     </Button>

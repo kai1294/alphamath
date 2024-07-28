@@ -1,7 +1,7 @@
 import { useMouse } from "@mantine/hooks";
 import { useContext } from "react";
 import { GlobalTransform } from "../workspace/GlobalTransform";
-import { Position } from "../workspace/types";
+import { Position } from "../types/scalar";
 
 export const useMousePosition = (): Position => {
     const { position, scale } = useContext(GlobalTransform);

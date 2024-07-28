@@ -1,21 +1,29 @@
-import { Box } from "@mantine/core";
+import { Box, Tooltip } from "@mantine/core";
 import { TransformProvider } from "../../workspace/Transform";
-import { Position } from "../../workspace/types";
+import { Position } from "../../types/scalar";
 
-export const DebugPoint = ({ pos }: { pos: Position }) => {
-    const size = 20;
-    
+export const DebugPoint = ({
+    pos,
+    size = 20,
+    label,
+}: {
+    pos?: Position,
+    size?: number,
+    label?: string,
+}) => {
     return (
         <TransformProvider value={{
-            x: pos.x - size/2,
-            y: pos.y - size/2,
+            x: (pos?.x || 0) - size/2,
+            y: (pos?.y || 0) - size/2,
         }}>
-            <Box
-                w={size+"px"}
-                h={size+"px"}
-                bg="green"
-                style={{ borderRadius: `${size/2}px` }}
-            />
+            <Tooltip label={label} disabled={!label}>
+                <Box
+                    w={size+"px"}
+                    h={size+"px"}
+                    bg="green"
+                    style={{ borderRadius: `${size/2}px` }}
+                />
+            </Tooltip>
         </TransformProvider>
     )
 };

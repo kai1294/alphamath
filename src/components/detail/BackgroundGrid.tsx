@@ -8,7 +8,7 @@ export const BackgroundGrid = () => {
 
     let c = `var(--mantine-color-gray-9)`;
     let t = `1px`;
-    let s = `${100 * scale}px`;
+    let s = `${500 * scale}px`;
     let backgroundImage = `linear-gradient(to right, ${c} ${t}, transparent 1px), linear-gradient(to bottom, ${c} ${t}, transparent 1px)`;
     let backgroundPosition = `${position.x}px ${position.y}px`;
 

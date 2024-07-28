@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useState } from "react";
-import { Position, WithSetters } from "./types";
+import { Position } from "../types/scalar";
+import { WithSetters } from "../types/utils";
 import { useHotkeys } from "@mantine/hooks";
 
 export interface IGlobalTransform {
@@ -9,6 +10,7 @@ export interface IGlobalTransform {
 
 export interface IGlobalTransformUtils {
     center: () => void;
+    reset: () => void;
 }
 
 export const GlobalTransform = React.createContext<WithSetters<IGlobalTransform> & IGlobalTransformUtils>({
@@ -17,10 +19,11 @@ export const GlobalTransform = React.createContext<WithSetters<IGlobalTransform>
     setPosition: () => {},
     setScale: () => {},
     center: () => {},
+    reset: () => {},
 });
 
 export const GlobalTransformProvider = ({ children }: PropsWithChildren) => {
-    const [scale, setScale] = useState(1);
+    const [scale, setScale] = useState(0.7);
     const [position, setPosition] = useState({ x: window.innerWidth/2, y: window.innerHeight/2 });
 
     const move = ({ x = 0, y = 0 }: Partial<Position>) => {
@@ -35,6 +38,15 @@ export const GlobalTransformProvider = ({ children }: PropsWithChildren) => {
         ["d", () => move({ x: -s })],
     ]);
 
+    const center = () => {
+        setPosition({ x: window.innerWidth/2, y: window.innerHeight/2 })
+    };
+
+    const reset = () => {
+        center();
+        setScale(0.7);
+    };
+
     return (
         <GlobalTransform.Provider value={{
             scale,
@@ -42,7 +54,8 @@ export const GlobalTransformProvider = ({ children }: PropsWithChildren) => {
             position,
             setPosition,
 
-            center: () => setPosition({ x: window.innerWidth/2, y: window.innerHeight/2 }),
+            center,
+            reset,
         }}>
             {children}
         </GlobalTransform.Provider>

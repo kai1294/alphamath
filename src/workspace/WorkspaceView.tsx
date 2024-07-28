@@ -3,16 +3,17 @@ import { PropsWithChildren, useContext, useRef, useState } from "react";
 import { GlobalTransform } from "./GlobalTransform";
 import { useRelativeDrag } from "../hooks/useRelativeDrag";
 import { BackgroundGrid } from "../components/detail/BackgroundGrid";
-import { Position } from "./types";
+import { Position } from "../types/scalar";
 import { useMousePosition } from "../hooks/useMousePosition";
 import { DebugPoint } from "../components/debug/DebugPoint";
+import { TransformProvider } from "./Transform";
 
 export const WorkspaceView = ({
     children
 }: PropsWithChildren) => {
     const mouse = useMousePosition();
     const { position, setPosition, scale, setScale } = useContext(GlobalTransform);
-    const [lastTouchDistance, setLastTouchDistance] = useState<number | null>(null);
+    const [lastPinchDistance, setLastPinchDistance] = useState<number | null>(null);
     const workspaceRef = useRef(null);
 
     const { isDragging: isPanning, props } = useRelativeDrag({
@@ -22,8 +23,8 @@ export const WorkspaceView = ({
     });
 
     const clientPosition = ({ clientX, clientY }: { clientX: number; clientY: number }) => ({
-        x: clientX,
-        y: clientY,
+        x: Math.round((clientX - position.x) / scale),
+        y: Math.round((clientY - position.y) / scale),
     });
 
     const getDistance = (touch1: React.Touch, touch2: React.Touch) => {
@@ -32,13 +33,15 @@ export const WorkspaceView = ({
         return Math.sqrt(dx * dx + dy * dy);
     };
 
-    const getMiddle = (a: Position, b: Position) => {
-
-    };
+    const getMiddle = (a: Position, b: Position) => ({
+        x: (a.x+b.x)/2,
+        y: (a.y+b.y)/2,
+    });
 
     const handleScaleChange = (scaleChange: number, point: Position) => {
         let newScale = Math.max(0.3, Math.min(2, scale + scaleChange));
         if (newScale == scale) return;
+        //let newScale = scale + scaleChange
         setScale(newScale);
         setPosition({
             x: Math.round(position.x - (point.x * scaleChange)),
@@ -48,7 +51,6 @@ export const WorkspaceView = ({
 
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
         e.preventDefault();
-        const delta = e.deltaY;
         const scaleChange = (e.deltaY < 0 ? 1 : -1) * 0.1;
         handleScaleChange(scaleChange, {
             x: ((window.innerWidth / 2) - position.x) / scale,
@@ -56,19 +58,27 @@ export const WorkspaceView = ({
         });
     };
 
-    const handleTouchMove = (event: React.TouchEvent<HTMLElement>) => {
-        if (event.touches.length === 2) {
-            const distance = getDistance(event.touches[0], event.touches[1]);
-            if (lastTouchDistance !== null) {
-                const scaleChange = distance / lastTouchDistance;
-                setScale(scale * scaleChange);
-            }
-            setLastTouchDistance(distance);
+    const handleTouchMove = (e: React.TouchEvent<HTMLElement>) => {
+        if (e.touches.length !== 2) return;
+        
+        const distance = getDistance(e.touches[0], e.touches[1]);
+
+        if (lastPinchDistance !== null) {
+            const scaleChange = (distance - lastPinchDistance) / 500;
+
+            let point = getMiddle(clientPosition(e.touches[0]), clientPosition(e.touches[1]));
+
+            handleScaleChange(
+                scaleChange,
+                point,
+            );
         }
+
+        setLastPinchDistance(distance);
     };
 
     const handleTouchEnd = () => {
-        setLastTouchDistance(null);
+        setLastPinchDistance(null);
     };
 
     return (
@@ -99,11 +109,6 @@ export const WorkspaceView = ({
                 }}
             >
                 {children}
-
-                <DebugPoint pos={{
-                    x: ((window.innerWidth / 2) - position.x) / scale,
-                    y: ((window.innerHeight / 2) - position.y) / scale,
-                }} />
             </Box>
         </Box>
     )

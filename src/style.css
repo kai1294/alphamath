@@ -9,6 +9,10 @@
        0 0/calc(var(--s)/5) calc(var(--s)/5);
 }
 
+.ptr {
+  pointer-events: all;
+}
+
 body {
   overflow: hidden;
 }

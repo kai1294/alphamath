@@ -1,6 +1,6 @@
 import { useHotkeys, useWindowEvent } from "@mantine/hooks";
 import { useContext, useState } from "react";
-import { Position } from "../workspace/types";
+import { Position } from "../types/scalar";
 import { GlobalTransform } from "../workspace/GlobalTransform";
 
 export const useRelativeDrag = <T,>({
