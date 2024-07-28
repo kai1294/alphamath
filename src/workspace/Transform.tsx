@@ -1,5 +1,6 @@
 import React, { PropsWithChildren, useState } from "react";
 import { ITransform, Position, WithSetters } from "./types";
+import { useUncontrolled } from "@mantine/hooks";
 
 const Transform = React.createContext<WithSetters<ITransform>>({
     position: { x: 0, y: 0 },
@@ -8,14 +9,19 @@ const Transform = React.createContext<WithSetters<ITransform>>({
 
 const TransformProvider = ({
     children,
-    initial,
+    defaultValue,
+    onChange,
+    value,
 }: {
-    initial?: Partial<Position>,
+    defaultValue?: Position,
+    value?: Position,
+    onChange?: (pos: Position) => void,
 } & PropsWithChildren) => {
-    let [position, setPosition] = useState({
-        x: 0,
-        y: 0,
-        ...initial,
+    let [position, setPosition] = useUncontrolled<Position>({
+        value,
+        defaultValue,
+        finalValue: { x: 0, y: 0 },
+        onChange,
     });
     
     return (

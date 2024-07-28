@@ -1,18 +1,17 @@
-import { useContext, useState } from "react";
-import { GlobalTransform } from "./GlobalTransform";
-import { Transform } from "./Transform";
 import { useHotkeys, useWindowEvent } from "@mantine/hooks";
-import { Position } from "./types";
+import { useContext, useState } from "react";
+import { Position } from "../workspace/types";
+import { GlobalTransform } from "../workspace/GlobalTransform";
 
 export const useRelativeDrag = <T,>({
-    value,
-    onChange,
-    scale,
+    value, onChange, scale,
 }: {
-    value: Position,
-    onChange: (pos: Position) => void,
-    scale: number,
+    value: Position;
+    onChange: (pos: Position) => void;
+    scale?: number;
 }) => {
+    const { scale: defaultScale } = useContext(GlobalTransform);
+    
     const [isDragging, setIsDragging] = useState(false);
     const [startDragPosition, setStartDragPosition] = useState<Position>({ x: 0, y: 0 });
     const [start, setStart] = useState<Position>({ x: 0, y: 0 });
@@ -36,8 +35,8 @@ export const useRelativeDrag = <T,>({
         const dx = delta.x - start.x;
         const dy = delta.y - start.y;
         onChange({
-            x: Math.round(startDragPosition.x + (dx / scale)),
-            y: Math.round(startDragPosition.y + (dy / scale)),
+            x: Math.round(startDragPosition.x + (dx / (scale || defaultScale))),
+            y: Math.round(startDragPosition.y + (dy / (scale || defaultScale))),
         });
     };
 
@@ -72,25 +71,3 @@ export const useRelativeDrag = <T,>({
         },
     };
 };
-
-export const useHandle = () => {
-    const { scale } = useContext(GlobalTransform);
-    const { position, setPosition } = useContext(Transform);
-
-    const { props, isDragging } = useRelativeDrag({
-        value: position,
-        onChange: setPosition,
-        scale,
-    });
-
-    return {
-        props: {
-            ...props,
-            style: {
-                cursor: isDragging ? "grabbing" : "grab",
-            }
-        },
-        isDragging,
-    };
-}
-

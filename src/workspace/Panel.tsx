@@ -1,6 +1,7 @@
 import { Box, Group, Paper, Stack, Text } from "@mantine/core";
 import React, { PropsWithChildren, useContext, useState } from "react";
-import { useHandle, useRelativeDrag } from "./useHandle";
+import { useHandle } from "../hooks/useHandle";
+import { useRelativeDrag } from "../hooks/useRelativeDrag";
 import { Transform, TransformProvider } from "./Transform";
 import { GlobalTransform } from "./GlobalTransform";
 
@@ -43,7 +44,7 @@ export const PanelContent = ({
             h={autoSize ? "auto" : h}
             style={{ cursor: "auto", textWrap: "nowrap" }}
             shadow="xl"
-            radius="xs"
+            radius="md"
             onMouseDown={(e) => e.stopPropagation()}
         >
             <Stack>

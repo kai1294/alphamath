@@ -5,12 +5,13 @@ import { Panel } from "./workspace/Panel";
 import { MainOverlay } from "./components/overlay/MainOverlay";
 import { GlobalTransformProvider } from "./workspace/GlobalTransform";
 import { Textarea, TextInput } from "@mantine/core";
+import { BackgroundGrid } from "./components/detail/BackgroundGrid";
 
 const App = () => {
     return (
         <GlobalTransformProvider>
             <WorkspaceView>
-                <TransformProvider initial={{ x: -25, y: -25 }}>
+                <TransformProvider defaultValue={{ x: -25, y: -25 }}>
                     <IconCrosshair size={50} />
                 </TransformProvider>
 
@@ -24,7 +25,11 @@ const App = () => {
                     <Textarea autosize />
                 </Panel>
 
+                
+
             </WorkspaceView>
+            
+            <BackgroundGrid />
 
             <MainOverlay />
         </GlobalTransformProvider>
