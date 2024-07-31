@@ -1,8 +1,8 @@
 import { ActionIcon, Box, Center, FloatingIndicator, Group, Paper, SegmentedControl } from "@mantine/core";
 import React, { useContext, useState } from "react";
-import { ToolContext } from "../../workspace/ToolContext";
 import { IconArrowsMove, IconPencil } from "@tabler/icons-react";
 import { Tool } from "../../types/app/tools";
+import { ToolContext } from "../workspace/ToolContext";
 
 export const ToolOverlay = () => {
     const { tool, setTool } = useContext(ToolContext);

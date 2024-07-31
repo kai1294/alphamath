@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useState } from "react";
-import { Tool } from "../types/app/tools";
-import { WithSetters } from "../types/utils";
+import { Tool } from "../../types/app/tools";
+import { WithSetters } from "../../types/utils";
 
 export interface ITool {
     tool: Tool;

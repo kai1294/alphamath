@@ -1,7 +1,6 @@
 import { Box } from "@mantine/core"
-import { Transform, TransformProvider } from "../../workspace/Transform";
 import { useContext } from "react";
-import { GlobalTransform } from "../../workspace/GlobalTransform";
+import { GlobalTransform } from "../workspace/GlobalTransform";
 
 export const BackgroundGrid = () => {
     const { position, scale } = useContext(GlobalTransform);

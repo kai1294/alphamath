@@ -19,3 +19,8 @@ export const match = <T extends Enum<Obj>, R>(value: T) =>
 export type WithSetters<T extends Obj> = T & {
     [P in keyof T as `set${Capitalize<string & P>}`]: (v: T[P]) => void;
 };
+
+export type EnumVariantComponent<T extends Enum<Obj>, Type extends T["type"]> = React.FC<{
+    data: Extract<T, { type: Type }>["data"];
+    onChange: (data: Extract<T, { type: Type }>["data"]) => void;
+}>;

@@ -1,15 +1,8 @@
-import { IPanel } from "./panels";
-import { Position, Size } from "../scalar";
-
-export interface WorkspacePanel {
-    panel: IPanel;
-    size: Size;
-    position: Position;
-};
+import { Item } from "./item";
 
 export interface IWorkspace {
     title: string;
-    panels: WorkspacePanel[];
+    items: Item[];
 };
 
 

@@ -1,4 +1,4 @@
-import { Enum } from "./utils";
+import { Enum } from "../utils";
 
 export type IPanel = Enum<{
     note: { content: string },

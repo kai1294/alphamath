@@ -1,7 +1,7 @@
 import { useContext } from "react"
-import { GlobalTransform } from "../../workspace/GlobalTransform"
 import { Box, Button, Group, Text } from "@mantine/core";
 import { useMousePosition } from "../../hooks/useMousePosition";
+import { GlobalTransform } from "../workspace/GlobalTransform";
 
 export const PositionOverlay = () => {
     const { position, scale, reset } = useContext(GlobalTransform);

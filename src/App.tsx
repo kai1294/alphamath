@@ -1,35 +1,40 @@
-import { IconCrosshair } from "@tabler/icons-react";
-import { TransformProvider } from "./workspace/Transform";
-import { WorkspaceView } from "./workspace/WorkspaceView";
-import { Panel } from "./workspace/Panel";
+import { WorkspaceView } from "./components/workspace/WorkspaceView";
 import { MainOverlay } from "./components/overlay/MainOverlay";
-import { GlobalTransformProvider } from "./workspace/GlobalTransform";
-import { Textarea, TextInput } from "@mantine/core";
 import { BackgroundGrid } from "./components/detail/BackgroundGrid";
-import { ToolProvider } from "./workspace/ToolContext";
-import { NodeComponent } from "./components/math/node/NodeComponent";
+import { ToolProvider } from "./components/workspace/ToolContext";
+import { GlobalTransformProvider } from "./components/workspace/GlobalTransform";
+import { WorkspaceContext, WorkspaceProvider } from "./components/workspace/WorkspaceContext";
+import { useContext } from "react";
+import { ItemRenderer } from "./components/items/ItemRenderer";
+import { TransformProvider } from "./components/workspace/Transform";
+import { IconCrosshair } from "@tabler/icons-react";
+
+const RootItemRenderer = () => {
+    const { items, setItems } = useContext(WorkspaceContext);
+
+    return (
+        items.map((item, i) => (
+            <ItemRenderer key={i} item={item} setItem={(data) => setItems(items.map((x, ii) => i == ii ? data : x))} />
+        ))
+    )
+}
 
 const App = () => {
     return (
         <GlobalTransformProvider>
-            <ToolProvider>
-                <WorkspaceView>
-                    <TransformProvider defaultValue={{ x: -25, y: -25 }}>
-                        <IconCrosshair size={50} />
-                    </TransformProvider>
+            <WorkspaceProvider>
+                <ToolProvider>
+                    <WorkspaceView>
+                        <TransformProvider defaultValue={{ x: -25, y: -25 }}>
+                            <IconCrosshair size={50} />
+                        </TransformProvider>
 
-                    <TransformProvider defaultValue={{ x: 100, y: 100 }}>
-                        <NodeComponent
-                            node={{ type: "Number", data: 1 }}
-                            setNode={() => {}}
-                        />
-                    </TransformProvider>
-                </WorkspaceView>
-                
-                <BackgroundGrid />
-
-                <MainOverlay />
-            </ToolProvider>
+                        <RootItemRenderer />
+                    </WorkspaceView>
+                    <BackgroundGrid />
+                    <MainOverlay />
+                </ToolProvider>
+            </WorkspaceProvider>
         </GlobalTransformProvider>
     );
 }
