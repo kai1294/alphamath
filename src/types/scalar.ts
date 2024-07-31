@@ -8,9 +8,9 @@ export interface Position {
 export const DefaultPosition: Position = { x: 0, y: 0 };
 
 export interface Size {
-    w: number | "auto";
-    h: number | "auto";
+    w: number;
+    h: number;
 }
 
-export const DefaultSize: Size = { w: "auto", h: "auto" };
+export const DefaultSize: Size = { w: 500, h: 500 };
 

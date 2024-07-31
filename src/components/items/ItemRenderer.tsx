@@ -3,6 +3,9 @@ import { Item } from "../../types/app/item";
 import { EnumVariantComponent, match, WithSetters } from "../../types/utils";
 import { TransformProvider } from "../workspace/Transform";
 import { NoteItem } from "./types/NoteItem";
+import { ErrorCard } from "../debug/ErrorCard";
+import { DebugItem } from "./types/DebugItem";
+import { ContextItem } from "./types/ContextItem";
 
 export const ItemRenderer = ({
     item,
@@ -12,7 +15,14 @@ export const ItemRenderer = ({
 }>) => {
     let Component = match(item)({
         Note: () => NoteItem,
-        _: () => () => "meow",
+        Debug: () => DebugItem,
+        Context: () => ContextItem,
+        _: () => () => (
+            <ErrorCard
+                message="Unknown Item"
+                description={item.type}
+            />
+        ),
     }) as EnumVariantComponent<Item, typeof item["type"]>;
 
     return (

@@ -1,0 +1,18 @@
+import { Text } from "@mantine/core";
+import { Item } from "../../../types/app/item";
+import { EnumVariantComponent } from "../../../types/utils";
+import { PanelWindow } from "../../panels/PanelWindow";
+import { useContext } from "react";
+import { WorkspaceContext } from "../../workspace/WorkspaceContext";
+
+export const DebugItem: EnumVariantComponent<Item, "Debug"> = () => {
+    const { items } = useContext(WorkspaceContext);
+
+    return (
+        <PanelWindow title="Debug: WorkspaceContext['items']">
+            <Text ff="monospace" p="sm" style={{ whiteSpace: "pre", inlineSize: "min-content" }} w="fit-content">
+                {JSON.stringify(items, null, 2)}
+            </Text>
+        </PanelWindow>
+    )
+}
