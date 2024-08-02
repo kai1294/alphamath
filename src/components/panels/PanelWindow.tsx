@@ -9,23 +9,31 @@ export const PanelWindow = ({
     size,
     onResize,
     resizable,
+    onFocus,
 }: {
     title?: React.ReactNode;
     size?: Size;
     resizable?: boolean,
     onResize?: (size: Size) => void;
+    onFocus?: () => void;
 } & PropsWithChildren) => {
     return (
         <Paper
             bg="dark.6"
-            style={{ cursor: "auto", textWrap: "nowrap" }}
-            shadow="xl"
-            onMouseDown={(e) => e.stopPropagation()}
+            style={{
+                cursor: "auto",
+                textWrap: "nowrap",
+                boxShadow: "0px 0px 0.5em 0.5em rgba(0,0,0,0.2)",
+            }}
+            onMouseDown={(e) => {
+                onFocus?.();
+                e.stopPropagation();
+            }}
             w={size?.w}
             h={size?.h}
         >
             <Stack gap={0} w="100%" h="100%">
-                <DragHandle w="100%">
+                <DragHandle w="100%" onMouseDown={onFocus}>
                     <Box h="2em" w="100%" bg="dark.5">
                         <Group px="xs" align="center" h="100%" w="100%" justify="space-between">
                             <Group>

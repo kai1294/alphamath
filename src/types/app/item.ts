@@ -1,7 +1,7 @@
 import React from "react";
 import { MathStatement } from "../model/statement";
-import { Enum } from "../utils";
-import { Position, Size } from "../scalar";
+import { Enum, EnumVariantComponent } from "../utils";
+import { Position, Size, WithId } from "../scalar";
 
 export type Item = Enum<{
     Note: {
@@ -18,4 +18,6 @@ export type Item = Enum<{
     };
 }> & {
     position: Position;
-};
+} & WithId;
+
+export type ItemComponent<Ty extends Item["type"]> = EnumVariantComponent<Item, Ty, { onFocus?: () => void }>;

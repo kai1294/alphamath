@@ -1,5 +1,7 @@
 export const noop = () => {};
 
+export type WithId = { id: string };
+
 export interface Position {
     x: number;
     y: number;

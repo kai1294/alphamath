@@ -1,5 +1,5 @@
 import { Box } from "@mantine/core";
-import { Item } from "../../types/app/item";
+import { Item, ItemComponent } from "../../types/app/item";
 import { EnumVariantComponent, match, WithSetters } from "../../types/utils";
 import { TransformProvider } from "../workspace/Transform";
 import { NoteItem } from "./types/NoteItem";
@@ -10,9 +10,12 @@ import { ContextItem } from "./types/ContextItem";
 export const ItemRenderer = ({
     item,
     setItem,
+    onFocus,
 }: WithSetters<{
     item: Item,
-}>) => {
+}> & {
+    onFocus?: () => void,
+}) => {
     let Component = match(item)({
         Note: () => NoteItem,
         Debug: () => DebugItem,
@@ -23,7 +26,7 @@ export const ItemRenderer = ({
                 description={item.type}
             />
         ),
-    }) as EnumVariantComponent<Item, typeof item["type"]>;
+    }) as ItemComponent<typeof item["type"]>;
 
     return (
         <TransformProvider value={item.position} onChange={(position) => setItem({
@@ -36,6 +39,7 @@ export const ItemRenderer = ({
                     ...item,
                     data,
                 } as Item)}
+                onFocus={onFocus}
             />
         </TransformProvider>
     )

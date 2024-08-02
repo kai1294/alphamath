@@ -14,7 +14,12 @@ const RootItemRenderer = () => {
 
     return (
         items.map((item, i) => (
-            <ItemRenderer key={i} item={item} setItem={(data) => setItems(items.map((x, ii) => i == ii ? data : x))} />
+            <ItemRenderer
+                key={item.id}
+                item={item}
+                setItem={(data) => setItems(items.map((x, ii) => i == ii ? data : x))}
+                onFocus={() => setItems([...(items.filter((_, ii) => ii !== i)), item])}
+            />
         ))
     )
 }

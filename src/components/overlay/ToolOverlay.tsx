@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { IconArrowsMove, IconPencil } from "@tabler/icons-react";
 import { Tool } from "../../types/app/tools";
 import { ToolContext } from "../workspace/ToolContext";
+import { useHotkeys } from "@mantine/hooks";
 
 export const ToolOverlay = () => {
     const { tool, setTool } = useContext(ToolContext);
@@ -11,6 +12,10 @@ export const ToolOverlay = () => {
         pan: {},
         edit: {},
     };
+
+    useHotkeys((["pan", "edit"] as Tool["type"][]).map((type, idx) => (
+        [(idx+1).toString(), () => setTool({ type, data: defaultData[type] })]
+    )))
 
     const iconProps = {
         width: "1.5em",
@@ -26,6 +31,7 @@ export const ToolOverlay = () => {
                             { label: <Center><IconArrowsMove {...iconProps} /></Center>, value: "pan" },
                             { label: <Center><IconPencil {...iconProps} /></Center>, value: "edit" },
                         ]}
+                        value={tool.type}
                         onChange={(v) => setTool({ type: v as Tool["type"], data: defaultData[v as Tool["type"]] })}
                         withItemsBorders={false}
                     />

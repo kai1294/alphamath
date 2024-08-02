@@ -1,15 +1,16 @@
 import { Box, Group, Stack } from "@mantine/core";
-import { Item } from "../../../types/app/item";
+import { Item, ItemComponent } from "../../../types/app/item";
 import { EnumVariantComponent } from "../../../types/utils";
 import { DragHandle } from "../../workspace/DragHandle";
 
-export const ContextItem: EnumVariantComponent<Item, "Context"> = ({
+export const ContextItem: ItemComponent<"Context"> = ({
     data,
     onChange,
+    onFocus,
 }) => {
     return (
         <Stack gap={0}>
-            <DragHandle>
+            <DragHandle onMouseDown={onFocus}>
                 <Box bg="gray.6" w="fit-content">
                     <Group w="auto" px="xs">
                         Context
