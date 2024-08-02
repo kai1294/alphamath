@@ -2,6 +2,8 @@ import { Box, Group, Paper, Stack, Text } from "@mantine/core";
 import React, { PropsWithChildren } from "react";
 import { DragHandle } from "../workspace/DragHandle";
 import { Size } from "../../types/scalar";
+import { LongActionIcon } from "../menu/ui/LongActionIcon";
+import { IconX } from "@tabler/icons-react";
 
 export const PanelWindow = ({
     children,
@@ -10,12 +12,14 @@ export const PanelWindow = ({
     onResize,
     resizable,
     onFocus,
+    onClose,
 }: {
     title?: React.ReactNode;
     size?: Size;
     resizable?: boolean,
     onResize?: (size: Size) => void;
     onFocus?: () => void;
+    onClose?: () => void;
 } & PropsWithChildren) => {
     return (
         <Paper
@@ -40,7 +44,16 @@ export const PanelWindow = ({
                                 {title}
                             </Group>
                             <Group>
-
+                                {onClose && (
+                                    <LongActionIcon
+                                        onLongPress={() => alert("meow")}
+                                        variant="light"
+                                        color="gray"
+                                        duration={2000}
+                                    >
+                                        <IconX />
+                                    </LongActionIcon>
+                                )}
                             </Group>
                         </Group>
                     </Box>

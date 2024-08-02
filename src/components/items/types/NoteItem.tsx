@@ -40,6 +40,7 @@ export const NoteItem: ItemComponent<"Note"> = ({
                 h: Math.max(100 + 32, data.size.h + 32 + 28),
             }}
             onFocus={onFocus}
+            onClose={() => {}}
         >
             {tool.type == "edit" ? (
                 <Textarea
