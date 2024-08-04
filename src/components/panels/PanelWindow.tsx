@@ -46,10 +46,11 @@ export const PanelWindow = ({
                             <Group>
                                 {onClose && (
                                     <LongActionIcon
-                                        onLongPress={() => alert("meow")}
+                                        onLongPress={onClose}
                                         variant="light"
                                         color="gray"
                                         duration={2000}
+                                        ringColor="yellow"
                                     >
                                         <IconX />
                                     </LongActionIcon>

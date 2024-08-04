@@ -1,40 +1,69 @@
-import { ActionIcon, ActionIconProps, Box, Center, PolymorphicComponentProps, RingProgress } from "@mantine/core";
-import { useLongPress } from "../../../hooks/useLongPress";
+import { ActionIcon, ActionIconProps, Box, Center, MantineColor, PolymorphicComponentProps, RingProgress, Tooltip, TooltipProps } from "@mantine/core";
+import { LongPressOptions, useLongPress } from "../../../hooks/useLongPress";
+import React from "react";
+import { useFadingState } from "../../../hooks/useFadingState";
+
+export interface LongActionIconOptions {
+    onLongPress: () => void;
+    tooltip?: React.ReactNode;
+    tooltipProps?: PolymorphicComponentProps<"div", TooltipProps>;
+    ringColor?: MantineColor;
+};
+
+export type LongActionIconProps = LongActionIconOptions
+    & LongPressOptions
+    & PolymorphicComponentProps<"button", ActionIconProps>
+    & React.PropsWithChildren;
 
 export const LongActionIcon = ({
     children,
     onLongPress,
-    duration,
-    ...aiProps
-}: PolymorphicComponentProps<"button", ActionIconProps> & {
-    onLongPress: () => void;
-    duration?: number;
-}) => {
-    const { progress, props } = useLongPress(onLongPress, { duration });
+    tooltip,
+    tooltipProps,
+    ringColor,
+    ...rest
+}: LongActionIconProps) => {
+    const [show, setShow] = useFadingState(false, false, 1000);
+    const { progress, props } = useLongPress(onLongPress, {
+        ...rest,
+        shortClickDuration: rest.shortClickDuration || 100,
+        onShortClick() {
+            rest.onShortClick?.();
+            setShow(true);
+        },
+    });
     
     return (
-        <ActionIcon
-            {...aiProps}
-            {...props}
+        <Tooltip
+            label={tooltip || "Long press"}
+            disabled={!show}
+            opened
+            withArrow
+            {...tooltipProps}
         >
-            <RingProgress
-                style={{ transition: "0.1s" }}
-                label={(
-                    <Center>
-                        <Box style={{
-                            scale: progress ? "0.5" : "1",
-                            transition: "0.2s",
-                        }}>
-                            {children}
-                        </Box>
-                    </Center>
-                )}
-                size={30}
-                thickness={progress ? 3 : 0}
-                sections={[
-                    { value: progress * 100, color: "blue" }
-                ]}
-            />
-        </ActionIcon>
+            <ActionIcon
+                {...rest}
+                {...props}
+            >
+                <RingProgress
+                    style={{ transition: "0.1s" }}
+                    label={(
+                        <Center>
+                            <Box style={{
+                                scale: progress ? "0.5" : "1",
+                                transition: "0.2s",
+                            }}>
+                                {children}
+                            </Box>
+                        </Center>
+                    )}
+                    size={30}
+                    thickness={progress ? 3 : 0}
+                    sections={[
+                        { value: progress * 100, color: ringColor || "blue" }
+                    ]}
+                />
+            </ActionIcon>
+        </Tooltip>
     )
 };

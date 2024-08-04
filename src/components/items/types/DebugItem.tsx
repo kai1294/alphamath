@@ -4,6 +4,7 @@ import { EnumVariantComponent } from "../../../types/utils";
 import { PanelWindow } from "../../panels/PanelWindow";
 import { useContext } from "react";
 import { WorkspaceContext } from "../../workspace/WorkspaceContext";
+import { LongButton } from "../../menu/ui/LongButton";
 
 export const DebugItem: ItemComponent<"Debug"> = ({ onFocus }) => {
     const { items } = useContext(WorkspaceContext);

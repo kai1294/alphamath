@@ -13,6 +13,18 @@ import 'mantine-contextmenu/styles.css';
 import "./style.css";
 
 const theme = createTheme({
+	fontFamily: "Lexend-VariableFont",
+	components: {
+		Tooltip: {
+			defaultProps: {
+				withArrow: true,
+				color: "dark",
+			},
+			styles: {
+				color: "var(--mantine-color-text)",
+			},
+		}
+	},
 	colors: {
 		dark: [
 			'#C1C2C5',

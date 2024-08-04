@@ -58,6 +58,7 @@ export const NoteItem: ItemComponent<"Note"> = ({
                         input: {
                             height: "100%",
                             fontFamily: "monospace",
+                            fontSize: "var(--mantine-font-size-md)",
                             overflow: "hidden",
                             textWrap: "nowrap",
                             padding: "0px !important",
