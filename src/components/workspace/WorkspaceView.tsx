@@ -95,7 +95,7 @@ export const WorkspaceView = ({
             style={{
                 overflow: "hidden",
                 position: 'relative',
-                cursor: isPanning ? "grabbing" : "grab",
+                cursor: isPanning ? "grabbing" : "all-scroll",
             }}
         >
             <Box

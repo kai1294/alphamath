@@ -6,20 +6,24 @@ import { NoteItem } from "./types/NoteItem";
 import { ErrorCard } from "../debug/ErrorCard";
 import { DebugItem } from "./types/DebugItem";
 import { ContextItem } from "./types/ContextItem";
+import { StatementItem } from "./types/StatementItem";
 
 export const ItemRenderer = ({
     item,
     setItem,
     onFocus,
+    onClose,
 }: WithSetters<{
     item: Item,
 }> & {
     onFocus?: () => void,
+    onClose?: () => void,
 }) => {
     let Component = match(item)({
         Note: () => NoteItem,
         Debug: () => DebugItem,
         Context: () => ContextItem,
+        Statement: () => StatementItem,
         _: () => () => (
             <ErrorCard
                 message="Unknown Item"
@@ -40,6 +44,7 @@ export const ItemRenderer = ({
                     data,
                 } as Item)}
                 onFocus={onFocus}
+                onClose={onClose}
             />
         </TransformProvider>
     )

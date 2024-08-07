@@ -29,6 +29,7 @@ export const NoteItem: ItemComponent<"Note"> = ({
     data,
     onChange,
     onFocus,
+    onClose,
 }) => {
     const { tool } = useContext(ToolContext);
     
@@ -40,7 +41,7 @@ export const NoteItem: ItemComponent<"Note"> = ({
                 h: Math.max(100 + 32, data.size.h + 32 + 28),
             }}
             onFocus={onFocus}
-            onClose={() => {}}
+            onClose={onClose}
         >
             {tool.type == "edit" ? (
                 <Textarea

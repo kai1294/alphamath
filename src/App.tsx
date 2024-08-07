@@ -19,6 +19,7 @@ const RootItemRenderer = () => {
                 item={item}
                 setItem={(data) => setItems(items.map((x, ii) => i == ii ? data : x))}
                 onFocus={() => setItems([...(items.filter((_, ii) => ii !== i)), item])}
+                onClose={() => setItems([...(items.filter((_, ii) => ii !== i))])}
             />
         ))
     )

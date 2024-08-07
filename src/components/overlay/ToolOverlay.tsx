@@ -4,6 +4,7 @@ import { IconArrowsMove, IconPencil } from "@tabler/icons-react";
 import { Tool } from "../../types/app/tools";
 import { ToolContext } from "../workspace/ToolContext";
 import { useHotkeys } from "@mantine/hooks";
+import { CreateItemOverlay } from "./CreateItemOverlay";
 
 export const ToolOverlay = () => {
     const { tool, setTool } = useContext(ToolContext);
@@ -25,7 +26,9 @@ export const ToolOverlay = () => {
     return (
         <Box style={{ position: "fixed", top: 0 }}>
             <Paper withBorder m="md" p="xs" className="ptr">
-                <Group>
+                <Group gap="xs">
+                    <CreateItemOverlay />
+
                     <SegmentedControl
                         data={[
                             { label: <Center><IconArrowsMove {...iconProps} /></Center>, value: "pan" },

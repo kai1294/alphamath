@@ -1,16 +1,18 @@
 import { Text } from "@mantine/core";
-import { Item, ItemComponent } from "../../../types/app/item";
-import { EnumVariantComponent } from "../../../types/utils";
+import { ItemComponent } from "../../../types/app/item";
 import { PanelWindow } from "../../panels/PanelWindow";
 import { useContext } from "react";
 import { WorkspaceContext } from "../../workspace/WorkspaceContext";
-import { LongButton } from "../../menu/ui/LongButton";
 
-export const DebugItem: ItemComponent<"Debug"> = ({ onFocus }) => {
+export const DebugItem: ItemComponent<"Debug"> = ({ onFocus, onClose }) => {
     const { items } = useContext(WorkspaceContext);
 
     return (
-        <PanelWindow title="Debug: WorkspaceContext.items" onFocus={onFocus}>
+        <PanelWindow
+            title="Debug"
+            onFocus={onFocus}
+            onClose={onClose}
+        >
             <Text ff="monospace" p="sm" style={{ whiteSpace: "pre", inlineSize: "min-content" }} w="fit-content">
                 {JSON.stringify(items, null, 2)}
             </Text>
