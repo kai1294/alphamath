@@ -42,10 +42,23 @@ export const createNew: Partial<Record<Item["type"], () => Item>> = {
         data: { items: [], size: DefaultSize },
         id: id(),
     }),
+    Debug: () => ({
+        position: DefaultPosition,
+        type: "Debug",
+        data: {  },
+        id: id(),
+    }),
     Statement: () => ({
         position: DefaultPosition,
         type: "Statement",
-        data: { statement: { type: "Expression", data: { type: "Number", data: 1 } } },
+        data: { statement: { type: "Expression", data: {
+            type: "Addition",
+            data: [
+                { type: "Number", data: 1, id: id() },
+                { type: "Number", data: 2, id: id() },
+            ],
+            id: id(),
+        } } },
         id: id(),
     }),
 };

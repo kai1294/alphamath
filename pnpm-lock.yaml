@@ -65,6 +65,9 @@ importers:
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
+      vite-tsconfig-paths:
+        specifier: ^5.0.0
+        version: 5.0.0(vite@5.3.5(@types/node@20.10.2)(sugarss@4.0.1)(terser@5.24.0))
     devDependencies:
       '@types/react':
         specifier: ^18.3.3
@@ -544,6 +547,15 @@ packages:
   dayjs@1.11.12:
     resolution: {integrity: sha512-Rt2g+nTbLlDWZTwwrIXjy9MeiZmSDI375FvZs72ngxx8PDC6YXOeR3q5LAuPzjZQxhiWdRKac7RKV+YyQYfYIg==}
 
+  debug@4.3.6:
+    resolution: {integrity: sha512-O/09Bd4Z1fBrU4VzkhFqVgpPzaGbw6Sm9FEkBT1A/YBXQFGuuSxa1dN2nxgxS34JmKXqYx8CZAwEVoJFImUXIg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   detect-node-es@1.1.0:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
 
@@ -566,6 +578,9 @@ packages:
   get-nonce@1.0.1:
     resolution: {integrity: sha512-FJhYRoDaiatfEkUK8HKlicmu/3SGFD51q3itKDGoSTysQJBnfOcxU5GxnhE1E6soB76MbT0MBtnKJuXyAx+96Q==}
     engines: {node: '>=6'}
+
+  globrex@0.1.2:
+    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
 
   html-parse-stringify@3.0.1:
     resolution: {integrity: sha512-KknJ50kTInJ7qIScF3jeaFRpMpE8/lfiTdzf/twXyPBLAGrLRTmkz3AdTnKeh40X8k9L2fdYwEp/42WGXIRGcg==}
@@ -597,6 +612,9 @@ packages:
       '@mantine/hooks': '>=7'
       clsx: '>=2'
       react: '>=18.2'
+
+  ms@2.1.2:
+    resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
 
   nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
@@ -726,6 +744,16 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
+  tsconfck@3.1.1:
+    resolution: {integrity: sha512-00eoI6WY57SvZEVjm13stEVE90VkEdJAFGgpFLTsZbJyW/LwFQ7uQxJHWpZ2hzSWgCPKc9AnBnNP+0X7o3hAmQ==}
+    engines: {node: ^18 || >=20}
+    hasBin: true
+    peerDependencies:
+      typescript: ^5.0.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
   tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
@@ -782,6 +810,14 @@ packages:
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
+
+  vite-tsconfig-paths@5.0.0:
+    resolution: {integrity: sha512-sCdKc6uC7ir102lW8deBiMnS0NGEs0100OJX8WZQmf3Uf7tJ/T3uQnzznq/tZWph7tkG+44JYOsKE7YTZjDn+Q==}
+    peerDependencies:
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
 
   vite@5.3.5:
     resolution: {integrity: sha512-MdjglKR6AQXQb9JGiS7Rc2wC6uMjcm7Go/NHNO63EwiJXfuk9PgqiP/n5IDJCziMkfw9n4Ubp7lttNwz+8ZVKA==}
@@ -1176,6 +1212,10 @@ snapshots:
 
   dayjs@1.11.12: {}
 
+  debug@4.3.6:
+    dependencies:
+      ms: 2.1.2
+
   detect-node-es@1.1.0: {}
 
   dom-helpers@5.2.1:
@@ -1216,6 +1256,8 @@ snapshots:
 
   get-nonce@1.0.1: {}
 
+  globrex@0.1.2: {}
+
   html-parse-stringify@3.0.1:
     dependencies:
       void-elements: 3.1.0
@@ -1246,6 +1288,8 @@ snapshots:
       '@mantine/hooks': 7.11.2(react@18.3.1)
       clsx: 2.1.1
       react: 18.3.1
+
+  ms@2.1.2: {}
 
   nanoid@3.3.7: {}
 
@@ -1390,6 +1434,8 @@ snapshots:
       source-map-support: 0.5.21
     optional: true
 
+  tsconfck@3.1.1: {}
+
   tslib@2.6.3: {}
 
   type-fest@4.23.0: {}
@@ -1430,6 +1476,17 @@ snapshots:
       '@types/react': 18.3.3
 
   uuid@9.0.1: {}
+
+  vite-tsconfig-paths@5.0.0(vite@5.3.5(@types/node@20.10.2)(sugarss@4.0.1)(terser@5.24.0)):
+    dependencies:
+      debug: 4.3.6
+      globrex: 0.1.2
+      tsconfck: 3.1.1
+    optionalDependencies:
+      vite: 5.3.5(@types/node@20.10.2)(sugarss@4.0.1)(terser@5.24.0)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
 
   vite@5.3.5(@types/node@20.10.2)(sugarss@4.0.1)(terser@5.24.0):
     dependencies:

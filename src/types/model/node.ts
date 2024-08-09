@@ -1,3 +1,4 @@
+import { WithId } from "../scalar";
 import { Enum } from "../utils";
 
 export type MathNode = Enum<{
@@ -13,4 +14,4 @@ export type MathNode = Enum<{
     Division: [MathNode, MathNode];
     Root: [MathNode, MathNode];
     Function: { identifier: MathNode; args: MathNode[] };
-}>;
+}> & WithId;

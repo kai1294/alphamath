@@ -18,10 +18,12 @@ const TransformProvider = ({
     defaultValue,
     onChange,
     value,
+    style,
 }: {
-    defaultValue?: Position,
-    value?: Position,
-    onChange?: (pos: Position) => void,
+    defaultValue?: Position;
+    value?: Position;
+    onChange?: (pos: Position) => void;
+    style?: React.CSSProperties;
 } & PropsWithChildren) => {
     let [position, setPosition] = useUncontrolled<Position>({
         value,
@@ -37,7 +39,8 @@ const TransformProvider = ({
         }}>
             <div style={{
                 transform: `translate(${position.x}px, ${position.y}px)`,
-                position: "absolute"
+                position: "absolute",
+                ...style,
             }}>
                 {children}
             </div>

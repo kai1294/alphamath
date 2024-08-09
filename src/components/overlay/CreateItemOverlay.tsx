@@ -36,6 +36,9 @@ export const CreateItemOverlay = () => {
                     <Menu.Item onClick={() => add("Context")}>
                         Context
                     </Menu.Item>
+                    <Menu.Item onClick={() => add("Debug")}>
+                        Debug
+                    </Menu.Item>
                 </Menu.Dropdown>
             </Menu>
         </Group>

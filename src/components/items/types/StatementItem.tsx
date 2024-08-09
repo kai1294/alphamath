@@ -10,12 +10,18 @@ import { IconGripVertical } from "@tabler/icons-react";
 
 export const StatementItem: ItemComponent<"Statement"> = ({ data, onChange, onFocus }) => {
     return (
-        <Paper withBorder pos="relative" radius="md" style={{ overflow: "clip" }}>
+        <Paper
+            withBorder
+            pos="relative"
+            radius="md"
+            style={{ backgroundClip: "padding-box", userSelect: "none" }}
+            bg="dark"
+        >
             <DragHandle>
-                <Flex align="center" bg="dark" style={{ flex: "1 1 100%" }}>
+                <Flex align="center">
                     <IconGripVertical height="100%" />
                     <Box bg="dark.7"
-                        style={{ cursor: "auto" }}
+                        style={{ cursor: "auto", borderRadius: "0px var(--mantine-radius-md) var(--mantine-radius-md) 0px" }}
                         onMouseDown={e => e.stopPropagation()}
                         onTouchStart={e => e.stopPropagation()}
                     >
