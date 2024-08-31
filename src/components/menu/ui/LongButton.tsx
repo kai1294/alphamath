@@ -25,13 +25,13 @@ export const LongButton = ({
     ...rest
 }: LongButtonProps) => {
     const theme = useMantineTheme();
-    const [show, setShow] = useFadingState(false, false, 1000);
+    const [showTooltip, setShowTooltip] = useFadingState(false, false, 1000);
     const { progress, props } = useLongPress(onLongPress, {
         ...rest,
         shortClickDuration: rest.shortClickDuration || 100,
         onShortClick() {
             rest.onShortClick?.();
-            setShow(true);
+            setShowTooltip(true);
         },
     });
 
@@ -49,7 +49,7 @@ export const LongButton = ({
     return (
         <Tooltip
             label={tooltip || "Long press"}
-            disabled={!show}
+            disabled={!showTooltip}
             opened
             withArrow
             {...tooltipProps}

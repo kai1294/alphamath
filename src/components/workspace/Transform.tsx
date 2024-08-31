@@ -1,30 +1,36 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { forwardRef, PropsWithChildren, useState } from "react";
 import { useUncontrolled } from "@mantine/hooks";
 import { DefaultPosition, Position } from "../../types/scalar";
 import { WithSetters } from "../../types/utils";
-import { noop } from "@mantine/core";
+import { Box, BoxComponentProps, noop, PolymorphicComponentProps } from "@mantine/core";
 
 export interface ITransform {
     position: Position;
 }
 
-const Transform = React.createContext<WithSetters<ITransform>>({
+export const Transform = React.createContext<WithSetters<ITransform>>({
     position: DefaultPosition,
     setPosition: noop,
 });
 
-const TransformProvider = ({
+export interface TransformProviderOptions {
+    defaultValue?: Position;
+    value?: Position;
+    onChange?: (pos: Position) => void;
+}
+
+export type TransformProviderProps = TransformProviderOptions
+    & PropsWithChildren
+    & Omit<PolymorphicComponentProps<"div", BoxComponentProps>, keyof TransformProviderOptions>
+
+export const TransformProvider = forwardRef<HTMLDivElement, TransformProviderProps>(({
     children,
     defaultValue,
     onChange,
     value,
     style,
-}: {
-    defaultValue?: Position;
-    value?: Position;
-    onChange?: (pos: Position) => void;
-    style?: React.CSSProperties;
-} & PropsWithChildren) => {
+    ...props
+}, ref) => {
     let [position, setPosition] = useUncontrolled<Position>({
         value,
         defaultValue,
@@ -37,18 +43,19 @@ const TransformProvider = ({
             position,
             setPosition,
         }}>
-            <div style={{
-                transform: `translate(${position.x}px, ${position.y}px)`,
-                position: "absolute",
-                ...style,
-            }}>
+            <Box
+                style={{
+                    transform: `translate(${position.x}px, ${position.y}px)`,
+                    position: "absolute",
+                    ...style,
+                }}
+                {...props}
+                ref={ref}
+            >
                 {children}
-            </div>
+            </Box>
         </Transform.Provider>
     );
-}
+})
 
-export {
-    Transform,
-    TransformProvider,
-}
+

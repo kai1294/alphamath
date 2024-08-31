@@ -1,5 +1,8 @@
+import { id } from "@/utils/id";
+
 export const noop = () => {};
 
+export const WithId = () => ({ id: id() });
 export type WithId = { id: string };
 
 export interface Position {

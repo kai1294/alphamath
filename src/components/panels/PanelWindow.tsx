@@ -3,7 +3,7 @@ import React, { PropsWithChildren } from "react";
 import { DragHandle } from "../workspace/DragHandle";
 import { Size } from "../../types/scalar";
 import { LongActionIcon } from "../menu/ui/LongActionIcon";
-import { IconX } from "@tabler/icons-react";
+import { IconTrash, IconX } from "@tabler/icons-react";
 
 export const PanelWindow = ({
     children,
@@ -49,10 +49,9 @@ export const PanelWindow = ({
                                         onLongPress={onClose}
                                         variant="light"
                                         color="gray"
-                                        duration={2000}
-                                        ringColor="yellow"
+                                        duration={1000}
                                     >
-                                        <IconX />
+                                        <IconTrash />
                                     </LongActionIcon>
                                 )}
                             </Group>

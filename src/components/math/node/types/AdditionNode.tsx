@@ -1,7 +1,8 @@
 import { MathNode } from "@/types/model/node";
 import { EnumVariantComponent } from "@/types/utils";
 import { Box, Group, Text } from "@mantine/core";
-import { NodeComponent } from "../NodeComponent";
+import { NodeComponent, SortableNodeComponent } from "../NodeComponent";
+import { SortableContext } from "@dnd-kit/sortable"
 
 export const AdditionNode: EnumVariantComponent<MathNode, "Addition"> = ({ data, onChange }) => {
     let list = [];
@@ -13,7 +14,7 @@ export const AdditionNode: EnumVariantComponent<MathNode, "Addition"> = ({ data,
         ));
 
         list.push((
-            <NodeComponent
+            <SortableNodeComponent
                 node={node}
                 setNode={(n) => onChange(data.map((v, ii) => Number(i) == ii ? n : v))}
             />
@@ -22,7 +23,9 @@ export const AdditionNode: EnumVariantComponent<MathNode, "Addition"> = ({ data,
 
     return (
         <Group wrap="nowrap">
-            {list.map((x, i) => <Box key={i}>{x}</Box>)}
+            <SortableContext items={data.map(x => x.id)}>
+                {list.map((x, i) => <Box key={i}>{x}</Box>)}
+            </SortableContext>
         </Group>
     )
 };

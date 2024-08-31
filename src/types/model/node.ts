@@ -1,6 +1,7 @@
 import { WithId } from "../scalar";
-import { Enum } from "../utils";
+import { createFactory, Enum } from "@alan404/enum";
 
+export const MathNode = createFactory<MathNode>(WithId);
 export type MathNode = Enum<{
     /// Represents Zero or any Positive number
     Number: number;

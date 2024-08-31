@@ -37,24 +37,22 @@ export const useLongPress = (onLongPress: () => void, {
         start();
     }, [startTime]);
 
-    useEffect(() => {
-        if(progress == 1) {
-            onLongPress();
-            setStartTime(null);
-        }
-    }, [progress]);
-
     const onInputDown = () => {
         setStartTime(Date.now());
         setProgress(0.01);
     };
 
+    const onInputCancel = () => {
+        setStartTime(null);
+        setProgress(0);
+    };
+
     const onInputUp = () => {
-        if (startTime && shortClickDuration) {
-            let heldDownFor = Date.now() - startTime;
-            if(shortClickDuration > heldDownFor) {
-                onShortClick?.();
-            }
+        let heldDownFor = Date.now() - (startTime || 0);
+        if (startTime && shortClickDuration && (shortClickDuration > heldDownFor)) {
+            onShortClick?.();
+        } else if (progress >= 1) {
+            onLongPress();
         }
 
         setStartTime(null);
@@ -62,14 +60,14 @@ export const useLongPress = (onLongPress: () => void, {
     };
 
     return {
-        progress,
+        progress: Math.min(progress, 1),
         props: {
             onMouseDown: (e: React.MouseEvent<HTMLElement>) => { e.stopPropagation(); onInputDown(); },
             onMouseUp: (e: React.MouseEvent<HTMLElement>) => { e.stopPropagation(); onInputUp(); },
             onTouchStart: (e: React.TouchEvent<HTMLElement>) => { e.stopPropagation(); onInputDown(); },
             onTouchEnd: (e: React.TouchEvent<HTMLElement>) => { e.stopPropagation(); onInputUp(); },
-            onTouchCancel: (e: React.TouchEvent<HTMLElement>) => { e.stopPropagation(); onInputUp(); },
-            onMouseLeave: (e: React.MouseEvent<HTMLElement>) => { e.stopPropagation(); onInputUp(); },
+            onTouchCancel: (e: React.TouchEvent<HTMLElement>) => { e.stopPropagation(); onInputCancel(); },
+            onMouseLeave: (e: React.MouseEvent<HTMLElement>) => { e.stopPropagation(); onInputCancel(); },
         },
     };
 };

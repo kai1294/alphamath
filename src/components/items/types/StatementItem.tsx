@@ -1,12 +1,9 @@
-import { Box, Flex, Group, Paper, Stack, Text } from "@mantine/core";
+import { Box, Flex, Paper, Text } from "@mantine/core";
 import { ItemComponent } from "../../../types/app/item";
-import { PanelWindow } from "../../panels/PanelWindow";
-import { useContext } from "react";
-import { WorkspaceContext } from "../../workspace/WorkspaceContext";
-import { match } from "../../../types/utils";
 import { NodeComponent } from "../../math/node/NodeComponent";
 import { DragHandle } from "../../workspace/DragHandle";
 import { IconGripVertical } from "@tabler/icons-react";
+import { match } from "@alan404/enum";
 
 export const StatementItem: ItemComponent<"Statement"> = ({ data, onChange, onFocus }) => {
     return (

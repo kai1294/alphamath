@@ -8,6 +8,7 @@ export interface LongActionIconOptions {
     tooltip?: React.ReactNode;
     tooltipProps?: PolymorphicComponentProps<"div", TooltipProps>;
     ringColor?: MantineColor;
+    confirmationRingColor?: MantineColor;
 };
 
 export type LongActionIconProps = LongActionIconOptions
@@ -21,22 +22,23 @@ export const LongActionIcon = ({
     tooltip,
     tooltipProps,
     ringColor,
+    confirmationRingColor,
     ...rest
 }: LongActionIconProps) => {
-    const [show, setShow] = useFadingState(false, false, 1000);
+    const [showTooltip, setShowTooltip] = useFadingState(false, false, 1000);
     const { progress, props } = useLongPress(onLongPress, {
         ...rest,
-        shortClickDuration: rest.shortClickDuration || 100,
+        shortClickDuration: rest.shortClickDuration || 400,
         onShortClick() {
             rest.onShortClick?.();
-            setShow(true);
+            setShowTooltip(true);
         },
     });
     
     return (
         <Tooltip
             label={tooltip || "Long press"}
-            disabled={!show}
+            disabled={tooltip === false || !showTooltip}
             opened
             withArrow
             {...tooltipProps}
@@ -46,7 +48,9 @@ export const LongActionIcon = ({
                 {...props}
             >
                 <RingProgress
-                    style={{ transition: "0.1s" }}
+                    style={{
+                        transition: "0.1s",
+                    }}
                     label={(
                         <Center>
                             <Box style={{
@@ -60,7 +64,7 @@ export const LongActionIcon = ({
                     size={30}
                     thickness={progress ? 3 : 0}
                     sections={[
-                        { value: progress * 100, color: ringColor || "blue" }
+                        { value: progress * 100, color: (progress == 1 ? (confirmationRingColor || "green") : (ringColor || "blue")) }
                     ]}
                 />
             </ActionIcon>

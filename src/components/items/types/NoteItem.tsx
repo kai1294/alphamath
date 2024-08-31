@@ -43,7 +43,7 @@ export const NoteItem: ItemComponent<"Note"> = ({
             onFocus={onFocus}
             onClose={onClose}
         >
-            {tool.type == "edit" ? (
+            {tool.type == "Edit" ? (
                 <Textarea
                     ff="monospace"
                     value={data.content}

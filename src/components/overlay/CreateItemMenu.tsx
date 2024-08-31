@@ -4,7 +4,7 @@ import { WorkspaceContext } from "../workspace/WorkspaceContext"
 import { IconPlus } from "@tabler/icons-react";
 import { createNew, Item } from "../../types/app/item";
 
-export const CreateItemOverlay = () => {
+export const CreateItemMenu = () => {
     const { items, setItems } = useContext(WorkspaceContext);
 
     const add = (ty: Item["type"]) => {
@@ -32,9 +32,6 @@ export const CreateItemOverlay = () => {
                     </Menu.Item>
                     <Menu.Item onClick={() => add("Statement")}>
                         Statement
-                    </Menu.Item>
-                    <Menu.Item onClick={() => add("Context")}>
-                        Context
                     </Menu.Item>
                     <Menu.Item onClick={() => add("Debug")}>
                         Debug
