@@ -1,7 +1,7 @@
 import React, { forwardRef, PropsWithChildren, useState } from "react";
 import { useUncontrolled } from "@mantine/hooks";
-import { DefaultPosition, Position } from "../../types/scalar";
-import { WithSetters } from "../../types/utils";
+import { DefaultPosition, Position } from "../../../types/scalar";
+import { WithSetters } from "../../../types/utils";
 import { Box, BoxComponentProps, noop, PolymorphicComponentProps } from "@mantine/core";
 
 export interface ITransform {

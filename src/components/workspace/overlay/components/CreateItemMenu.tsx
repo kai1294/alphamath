@@ -1,8 +1,8 @@
 import { ActionIcon, Group, Menu } from "@mantine/core"
 import { useContext } from "react"
-import { WorkspaceContext } from "../workspace/WorkspaceContext"
+import { WorkspaceContext } from "../../WorkspaceContext"
 import { IconPlus } from "@tabler/icons-react";
-import { createNew, Item } from "../../types/app/item";
+import { createNew, Item } from "../../../../types/app/item";
 
 export const CreateItemMenu = () => {
     const { items, setItems } = useContext(WorkspaceContext);

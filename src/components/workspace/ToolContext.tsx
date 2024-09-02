@@ -7,12 +7,12 @@ export interface ITool {
 }
 
 export const ToolContext = React.createContext<WithSetters<ITool>>({
-    tool: { type: "pan", data: {} },
+    tool: Tool.Pan({}),
     setTool: () => {},
 });
 
 export const ToolProvider = ({ children }: PropsWithChildren) => {
-    const [tool, setTool] = useState<Tool>({ type: "pan", data: {} });
+    const [tool, setTool] = useState<Tool>(Tool.Pan({}));
     
     return (
         <ToolContext.Provider value={{

@@ -1,7 +1,7 @@
 import { Box, Group, Stack } from "@mantine/core";
-import { Item, ItemComponent } from "../../../types/app/item";
-import { EnumVariantComponent } from "../../../types/utils";
-import { DragHandle } from "../../workspace/DragHandle";
+import { Item, ItemComponent } from "../../../../types/app/item";
+import { EnumVariantComponent } from "../../../../types/utils";
+import { DragHandle } from "../../util/DragHandle";
 
 export const ContextItem: ItemComponent<"Context"> = ({
     data,

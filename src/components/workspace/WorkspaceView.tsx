@@ -1,12 +1,12 @@
 import { Box } from "@mantine/core";
 import { PropsWithChildren, useContext, useRef, useState } from "react";
-import { GlobalTransform } from "./GlobalTransform";
+import { GlobalTransform } from "./core/GlobalTransform";
 import { useRelativeDrag } from "../../hooks/useRelativeDrag";
 import { BackgroundGrid } from "../detail/BackgroundGrid";
 import { Position } from "../../types/scalar";
 import { useMousePosition } from "../../hooks/useMousePosition";
 import { DebugPoint } from "../debug/DebugPoint";
-import { TransformProvider } from "./Transform";
+import { TransformProvider } from "./core/Transform";
 
 export const WorkspaceView = ({
     children

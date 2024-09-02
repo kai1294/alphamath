@@ -1,8 +1,8 @@
 import { Box, BoxComponentProps, BoxProps, PolymorphicComponentProps } from "@mantine/core";
 import { PropsWithChildren, useContext, useEffect } from "react";
-import { Transform } from "./Transform";
-import { useRelativeDrag } from "../../hooks/useRelativeDrag";
-import { Position } from "../../types/scalar";
+import { Transform } from "../core/Transform";
+import { useRelativeDrag } from "../../../hooks/useRelativeDrag";
+import { Position } from "../../../types/scalar";
 
 export const DragHandle = ({
     children,

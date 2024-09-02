@@ -1,6 +1,6 @@
 import { noop } from "@mantine/core";
-import { DefaultPosition, DefaultSize, Position, Size } from "../../types/scalar";
-import { WithSetters } from "../../types/utils";
+import { DefaultPosition, DefaultSize, Position, Size } from "../../../types/scalar";
+import { WithSetters } from "../../../types/utils";
 import React, { PropsWithChildren } from "react";
 import { useUncontrolled } from "@mantine/hooks";
 import { TransformProvider } from "./Transform";

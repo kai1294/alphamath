@@ -1,6 +1,6 @@
 import { Box, Text } from "@mantine/core"
-import { PositionOverlay } from "./PositionOverlay"
-import { ToolOverlay } from "./ToolOverlay"
+import { PositionOverlay } from "./components/PositionOverlay"
+import { ToolOverlay } from "./components/ToolOverlay"
 
 
 export const MainOverlay = () => {

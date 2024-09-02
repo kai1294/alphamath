@@ -2,7 +2,7 @@ import { useHotkeys, useWindowEvent } from "@mantine/hooks";
 import { useContext, useState } from "react";
 import { Position } from "../types/scalar";
 import { mouseButtons } from "../utils/input";
-import { GlobalTransform } from "../components/workspace/GlobalTransform";
+import { GlobalTransform } from "../components/workspace/core/GlobalTransform";
 
 export const useRelativeDrag = <T,>({
     value, onChange, scale,

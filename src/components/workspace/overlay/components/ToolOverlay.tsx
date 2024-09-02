@@ -1,8 +1,8 @@
 import { ActionIcon, Box, Center, FloatingIndicator, Group, Paper, SegmentedControl, Tooltip } from "@mantine/core";
 import React, { useContext, useState } from "react";
 import { IconArrowsMove, IconPencil } from "@tabler/icons-react";
-import { Tool } from "../../types/app/tools";
-import { ToolContext } from "../workspace/ToolContext";
+import { Tool } from "../../../../types/app/tools";
+import { ToolContext } from "../../ToolContext";
 import { useHotkeys } from "@mantine/hooks";
 import { CreateItemMenu } from "./CreateItemMenu";
 

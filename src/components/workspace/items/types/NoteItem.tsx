@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
-import { ToolContext } from "../../workspace/ToolContext";
-import { PanelWindow } from "../../panels/PanelWindow";
-import { EnumVariantComponent } from "../../../types/utils";
-import { Item, ItemComponent } from "../../../types/app/item";
+import { ToolContext } from "../../ToolContext";
+import { PanelWindow } from "../../util/PanelWindow";
+import { EnumVariantComponent } from "../../../../types/utils";
+import { Item, ItemComponent } from "../../../../types/app/item";
 import { Text, Textarea, TextInput } from "@mantine/core";
 import { usePrevious, useResizeObserver } from "@mantine/hooks";
 

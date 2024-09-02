@@ -1,8 +1,8 @@
 import { Text } from "@mantine/core";
-import { ItemComponent } from "../../../types/app/item";
-import { PanelWindow } from "../../panels/PanelWindow";
+import { ItemComponent } from "../../../../types/app/item";
+import { PanelWindow } from "../../util/PanelWindow";
 import { useContext } from "react";
-import { WorkspaceContext } from "../../workspace/WorkspaceContext";
+import { WorkspaceContext } from "../../WorkspaceContext";
 
 export const DebugItem: ItemComponent<"Debug"> = ({ onFocus, onClose }) => {
     const { items } = useContext(WorkspaceContext);

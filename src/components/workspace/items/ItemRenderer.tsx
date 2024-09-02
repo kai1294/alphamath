@@ -1,8 +1,8 @@
-import { Item, ItemComponent } from "../../types/app/item";
-import { WithSetters } from "../../types/utils";
-import { TransformProvider } from "../workspace/Transform";
+import { Item, ItemComponent } from "../../../types/app/item";
+import { WithSetters } from "../../../types/utils";
+import { TransformProvider } from "../core/Transform";
 import { NoteItem } from "./types/NoteItem";
-import { ErrorCard } from "../debug/ErrorCard";
+import { ErrorCard } from "../../debug/ErrorCard";
 import { DebugItem } from "./types/DebugItem";
 import { ContextItem } from "./types/ContextItem";
 import { StatementItem } from "./types/StatementItem";
