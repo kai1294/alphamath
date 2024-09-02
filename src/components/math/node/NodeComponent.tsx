@@ -8,6 +8,8 @@ import { useState } from "react";
 import { DefaultPosition, Position } from "@/types/scalar";
 import { useSortable } from "@dnd-kit/sortable";
 import { match } from "@alan404/enum";
+import { MultiplicationNode } from "./types/MultiplicationNode";
+import { ErrorCard } from "@/components/debug/ErrorCard";
 
 export const SortableNodeComponent = ({
     node,
@@ -56,13 +58,26 @@ export const NodeComponent = ({
                     <AdditionNode
                         data={v}
                         onChange={(n) => setNode({
-                            ...node,
-                            type: "Addition",
-                            data: n,
+                            ...MathNode.Addition(n),
+                            id: node.id,
                         })}
                     />
                 ),
-                _: () => <Text>todo</Text>,
+                Multiplication: (v) => (
+                    <MultiplicationNode
+                        data={v}
+                        onChange={(n) => setNode({
+                            ...MathNode.Multiplication(n),
+                            id: node.id,
+                        })}
+                    />
+                ),
+                _: () => (
+                    <ErrorCard
+                        message="TODO"
+                        description={node.type}
+                    />
+                ),
             }) as React.ReactNode}
         </Paper>
     )
