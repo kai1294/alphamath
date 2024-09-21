@@ -4,12 +4,15 @@ import { WithSetters } from "../../../types/utils";
 import { AdditionNode } from "./types/AdditionNode";
 import { TransformProvider } from "@/components/workspace/core/Transform";
 import { DragHandle } from "@/components/workspace/util/DragHandle";
-import { useState } from "react";
+import { ComponentType, PropsWithChildren, useContext, useState } from "react";
 import { DefaultPosition, Position } from "@/types/scalar";
 import { useSortable } from "@dnd-kit/sortable";
 import { match } from "@alan404/enum";
 import { MultiplicationNode } from "./types/MultiplicationNode";
 import { ErrorCard } from "@/components/debug/ErrorCard";
+import { NodeComponentWrapper, WithWrappers, WrappersContext } from "./Wrappers";
+import { Selectable } from "../select/Selectable";
+import { SelectableWrapper } from "./wrappers/SelectableWrapper";
 
 export const SortableNodeComponent = ({
     node,
@@ -43,42 +46,58 @@ export const SortableNodeComponent = ({
     )
 }
 
+export type NodeComponentProps = WithSetters<{ node: MathNode }> & {
+    wrappers?: NodeComponentWrapper[];
+};
+
 export const NodeComponent = ({
     node,
     setNode,
-}: WithSetters<{ node: MathNode }>) => {
-    const [position, setPosition] = useState<Position>(DefaultPosition);
+    wrappers = [],
+}: NodeComponentProps) => {
+    const prevWrappers = useContext(WrappersContext);
 
     return (
-        <Paper withBorder shadow="md" px="sm" py="xs" radius="md">
-            {match(node)({
-                Number: (n) => <Text>{n.toString()}</Text>,
-                Variable: (v) => <Text>{v}</Text>,
-                Addition: (v) => (
-                    <AdditionNode
-                        data={v}
-                        onChange={(n) => setNode({
-                            ...MathNode.Addition(n),
-                            id: node.id,
-                        })}
-                    />
-                ),
-                Multiplication: (v) => (
-                    <MultiplicationNode
-                        data={v}
-                        onChange={(n) => setNode({
-                            ...MathNode.Multiplication(n),
-                            id: node.id,
-                        })}
-                    />
-                ),
-                _: () => (
-                    <ErrorCard
-                        message="TODO"
-                        description={node.type}
-                    />
-                ),
-            }) as React.ReactNode}
-        </Paper>
+        <WrappersContext.Provider value={[
+            ...prevWrappers,
+            ...wrappers,
+            SelectableWrapper,
+        ]}>
+            <WithWrappers
+                node={node}
+                setNode={setNode}
+            >
+                <Paper withBorder shadow="md" px="sm" py="xs" radius="md">
+                    {match(node)({
+                        Number: (n) => <Text>{n.toString()}</Text>,
+                        Variable: (v) => <Text>{v}</Text>,
+                        Addition: (v) => (
+                            <AdditionNode
+                                data={v}
+                                onChange={(n) => setNode({
+                                    ...MathNode.Addition(n),
+                                    id: node.id,
+                                })}
+                            />
+                        ),
+                        Multiplication: (v) => (
+                            <MultiplicationNode
+                                data={v}
+                                onChange={(n) => setNode({
+                                    ...MathNode.Multiplication(n),
+                                    id: node.id,
+                                })}
+                            />
+                        ),
+                        _: () => (
+                            <ErrorCard
+                                message="TODO"
+                                description={node.type}
+                            />
+                        ),
+                    }) as React.ReactNode}
+                </Paper>
+            </WithWrappers>
+        </WrappersContext.Provider>
     )
 };

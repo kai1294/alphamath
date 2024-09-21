@@ -4,6 +4,7 @@ import { DragHandle } from "./DragHandle";
 import { Size } from "../../../types/scalar";
 import { LongActionIcon } from "../../menu/ui/LongActionIcon";
 import { IconTrash, IconX } from "@tabler/icons-react";
+import { shadow } from "@/utils/styling";
 
 export const PanelWindow = ({
     children,
@@ -27,7 +28,7 @@ export const PanelWindow = ({
             style={{
                 cursor: "auto",
                 textWrap: "nowrap",
-                boxShadow: "0px 0px 0.5em 0.5em rgba(0,0,0,0.2)",
+                ...shadow(),
             }}
             onMouseDown={(e) => {
                 onFocus?.();
@@ -35,11 +36,20 @@ export const PanelWindow = ({
             }}
             w={size?.w}
             h={size?.h}
+            radius="sm"
         >
             <Stack gap={0} w="100%" h="100%">
                 <DragHandle w="100%" onMouseDown={onFocus}>
-                    <Box h="2em" w="100%" bg="dark.5">
-                        <Group px="xs" align="center" h="100%" w="100%" justify="space-between">
+                    <Box
+                        h="2em"
+                        w="100%"
+                        bg="dark.5"
+                        style={{
+                            borderTopLeftRadius: "var(--mantine-radius-sm)",
+                            borderTopRightRadius: "var(--mantine-radius-sm)",
+                        }}
+                    >
+                        <Group px="sm" align="center" h="100%" w="100%" justify="space-between">
                             <Group>
                                 {title}
                             </Group>

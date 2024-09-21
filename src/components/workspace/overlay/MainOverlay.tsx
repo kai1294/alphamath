@@ -1,7 +1,7 @@
 import { Box, Text } from "@mantine/core"
 import { PositionOverlay } from "./components/PositionOverlay"
 import { ToolOverlay } from "./components/ToolOverlay"
-import { CommandBar } from "./components/CommandBar"
+import { CommandBarOverlay } from "./commandbar/CommandBar"
 
 
 export const MainOverlay = () => {
@@ -10,7 +10,7 @@ export const MainOverlay = () => {
             <ToolOverlay />
             <PositionOverlay />
 
-            <CommandBar />
+            <CommandBarOverlay />
 
             <Text style={{ position: "fixed", bottom: 0, left: 0 }}>
                 alphamath 0.1

@@ -1,6 +1,6 @@
-import { ActionIcon, Box, Center, FloatingIndicator, Group, Paper, SegmentedControl, Tooltip } from "@mantine/core";
+import { ActionIcon, Box, Center, FloatingIndicator, Group, Kbd, Paper, SegmentedControl, Text, Tooltip } from "@mantine/core";
 import React, { useContext, useState } from "react";
-import { IconArrowsMove, IconPencil } from "@tabler/icons-react";
+import { IconArrowsMove, IconClick, IconPencil, TablerIconsProps } from "@tabler/icons-react";
 import { Tool } from "../../../../types/app/tools";
 import { ToolContext } from "../../ToolContext";
 import { useHotkeys } from "@mantine/hooks";
@@ -10,10 +10,11 @@ export const ToolOverlay = () => {
     const { tool, setTool } = useContext(ToolContext);
 
     const pickTool = (type: Tool["type"]) =>
-        setTool(Tool[type](defaultData[type]));
+        setTool({ type, data: defaultData[type] } as Tool);
 
     const defaultData: { [P in Tool["type"]]: Extract<Tool, { type: P }>["data"] } = {
         Pan: {},
+        Select: { selectedIds: [] },
         Edit: {},
     };
     
@@ -22,13 +23,15 @@ export const ToolOverlay = () => {
         height: "1.5em",
     };
 
-    const toolIcons: Record<Tool["type"], React.ReactNode> = {
-        Pan: <IconArrowsMove {...iconProps} />,
-        Edit: <IconPencil {...iconProps} />,
+    const toolIcons: Record<Tool["type"], React.ComponentType<TablerIconsProps>> = {
+        Pan: IconArrowsMove,
+        Edit: IconPencil,
+        Select: IconClick,
     };
 
     const Hotbar: Tool["type"][] = [
         "Pan",
+        "Select",
         "Edit",
     ];
 
@@ -43,16 +46,25 @@ export const ToolOverlay = () => {
                     <CreateItemMenu />
 
                     <SegmentedControl
-                        data={Hotbar.map((type) => ({
-                            label: (
-                                <Tooltip label={type}>
-                                    <Center>
-                                        {toolIcons[type]}
-                                    </Center>
-                                </Tooltip>
-                            ),
-                            value: type,
-                        }))}
+                        data={Hotbar.map((type, i) => {
+                            let Icon = toolIcons[type];
+
+                            return ({
+                                label: (
+                                    <Tooltip label={(
+                                        <Group gap="xs">
+                                            <Text>{type}</Text>
+                                            <Kbd>{i+1}</Kbd>
+                                        </Group>
+                                    )}>
+                                        <Center>
+                                            <Icon {...iconProps} />
+                                        </Center>
+                                    </Tooltip>
+                                ),
+                                value: type,
+                            });
+                        })}
                         value={tool.type}
                         onChange={(v) => pickTool(v as Tool["type"])}
                         withItemsBorders={false}

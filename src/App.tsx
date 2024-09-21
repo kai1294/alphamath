@@ -8,7 +8,8 @@ import { useContext } from "react";
 import { ItemRenderer } from "./components/workspace/items/ItemRenderer";
 import { TransformProvider } from "./components/workspace/core/Transform";
 import { IconCrosshair } from "@tabler/icons-react";
-import { DndContext } from "@dnd-kit/core"
+import { ContextStack } from "./components/util/ContextStack";
+import { SelectionContextProvider } from "./components/math/select/SelectionContext";
 
 const RootItemRenderer = () => {
     const { items, setItems } = useContext(WorkspaceContext);
@@ -28,23 +29,22 @@ const RootItemRenderer = () => {
 
 const App = () => {
     return (
-        <GlobalTransformProvider>
-            <WorkspaceProvider>
-                <ToolProvider>
-                    <DndContext>
-                        <BackgroundGrid />
-                        <WorkspaceView>
-                            <TransformProvider defaultValue={{ x: -25, y: -25 }}>
-                                <IconCrosshair size={50} />
-                            </TransformProvider>
+        <ContextStack providers={[
+            GlobalTransformProvider,
+            WorkspaceProvider,
+            ToolProvider,
+            SelectionContextProvider,
+        ]}>
+            <BackgroundGrid />
+            <WorkspaceView>
+                <TransformProvider defaultValue={{ x: -25, y: -25 }}>
+                    <IconCrosshair size={50} />
+                </TransformProvider>
 
-                            <RootItemRenderer />
-                        </WorkspaceView>
-                        <MainOverlay />
-                    </DndContext>
-                </ToolProvider>
-            </WorkspaceProvider>
-        </GlobalTransformProvider>
+                <RootItemRenderer />
+            </WorkspaceView>
+            <MainOverlay />
+        </ContextStack>
     );
 }
 

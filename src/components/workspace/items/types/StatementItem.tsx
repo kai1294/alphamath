@@ -5,6 +5,7 @@ import { DragHandle } from "../../util/DragHandle";
 import { IconGripVertical } from "@tabler/icons-react";
 import { match } from "@alan404/enum";
 import { MathStatement } from "@/types/model/statement";
+import { shadow } from "@/utils/styling";
 
 export const StatementItem: ItemComponent<"Statement"> = ({ data, onChange, onFocus, onClose }) => {
     return (
@@ -12,7 +13,11 @@ export const StatementItem: ItemComponent<"Statement"> = ({ data, onChange, onFo
             withBorder
             pos="relative"
             radius="md"
-            style={{ backgroundClip: "padding-box", userSelect: "none" }}
+            style={{
+                backgroundClip: "padding-box",
+                userSelect: "none",
+                ...shadow(),
+            }}
             bg="dark"
         >
             <DragHandle onMouseDown={onFocus} onTouchStart={onFocus}>

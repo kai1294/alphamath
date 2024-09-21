@@ -14,7 +14,7 @@ export const MultiplicationNode: EnumVariantComponent<MathNode, "Multiplication"
         ));
 
         list.push((
-            <SortableNodeComponent
+            <NodeComponent
                 node={node}
                 setNode={(n) => onChange(data.map((v, ii) => Number(i) == ii ? n : v))}
             />
