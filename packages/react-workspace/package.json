@@ -1,0 +1,29 @@
+{
+	"name": "@alan404/react-workspace",
+	"version": "0.1.1",
+	"author": "alan404",
+	"repository": "https://github.com/TheAlan404/alphamath/tree/main/packages/react-workspace",
+	"description": "Infinitely pannable, accessible map-like workspace for React",
+	"exports": "./src/index.ts",
+	"publishConfig": {
+		"main": "dist/src/index.js",
+		"types": "dist/src/index.d.ts"
+	},
+	"type": "module",
+	"files": [
+		"/dist"
+	],
+	"scripts": {
+		"build": "tsc"
+	},
+	"devDependencies": {
+		"@types/react": "^18.3.12",
+		"@types/react-dom": "^18.3.1",
+		"typescript": "^5.6.2"
+	},
+	"dependencies": {
+		"@mantine/hooks": "^7.13.4",
+		"react": "^18.3.1",
+		"@alan404/vec2": "workspace:"
+	}
+}

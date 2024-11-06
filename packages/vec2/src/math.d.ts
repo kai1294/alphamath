@@ -1,0 +1,16 @@
+import { Vec2Like } from "./utils";
+export declare const vec2add: (...vecs: Vec2Like[]) => import("./vec2").Vec2;
+export declare const vec2mul: (...vecs: Vec2Like[]) => import("./vec2").Vec2;
+export declare const vec2sub: (a: Vec2Like, b: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2div: (a: Vec2Like, b: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2average: (vecs: Vec2Like[]) => import("./vec2").Vec2;
+export declare const vec2middle: (a: Vec2Like, b: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2mag: (vec: Vec2Like) => number;
+export declare const vec2distance: (a: Vec2Like, b: Vec2Like) => number;
+export declare const vec2apply: (vec: Vec2Like, fn: (v: number) => number) => import("./vec2").Vec2;
+export declare const vec2round: (vec: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2floor: (vec: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2ceil: (vec: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2normalize: (vec: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2abs: (vec: Vec2Like) => import("./vec2").Vec2;
+export declare const vec2dot: (a: Vec2Like, b: Vec2Like) => import("./vec2").Vec2;
