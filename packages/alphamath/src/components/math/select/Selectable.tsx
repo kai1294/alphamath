@@ -34,11 +34,8 @@ export const Selectable = ({
                 toggleSelect();
             }}
 
-            style={{
-                outline: isSelected ? "solid var(--mantine-color-blue-outline)" : "",
-                outlineOffset: "0.2em",
-                borderRadius: "var(--mantine-radius-md)",
-            }}
+            data-selected={isSelected}
+            className="selectable"
         >
             {children}
         </Box>

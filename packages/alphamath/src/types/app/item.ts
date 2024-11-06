@@ -45,9 +45,12 @@ export const createNew: Partial<Record<Item["type"], () => Item>> = {
     Debug: () => Item.Debug({}),
     Statement: () => Item.Statement({
         statement: MathStatement.Expression(
-            MathNode.Addition([
-                MathNode.Number(1),
-                MathNode.Number(2),
+            MathNode.Multiplication([
+                MathNode.Number(5),
+                MathNode.Addition([
+                    MathNode.Number(1),
+                    MathNode.Number(2),
+                ]),
             ])
         )
     }),

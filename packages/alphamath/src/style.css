@@ -12,3 +12,12 @@
 body {
   overflow: hidden;
 }
+
+.selectable {
+  outline-offset: 0.2em;
+  border-radius: var(--mantine-radius-md);
+}
+
+.selectable[data-selected=true] {
+  outline: solid var(--mantine-color-blue-outline);
+}

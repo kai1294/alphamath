@@ -1,4 +1,4 @@
-import { MathNode } from "@/types/model/node";
+import { childMathNodes, isMathNodeInside, MathNode } from "@/types/model/node";
 import { noop } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import { createContext, PropsWithChildren } from "react";
@@ -24,6 +24,20 @@ export const SelectionContextProvider = ({ children }: PropsWithChildren) => {
 
     const select = (item: SelectedItem) => {
         handlers.append(item);
+        /* handlers.setState((li) => {
+            if(li.some(x => x.id == item.id)) return li;
+
+            if(li.some(x => isMathNodeInside(x, item))) return li;
+
+            let children = childMathNodes(item);
+            if(children.some(x => li.some(s => s.id == x.id)))
+                return [...li.filter(x => !children.some(c => c.id == x.id)), item];
+
+            if(children.every(x => li.some(s => x.id == s.id)))
+                return [];
+
+            return [...li, item];
+        }); */
     };
 
     const deselect = (item: SelectedItem) => {
