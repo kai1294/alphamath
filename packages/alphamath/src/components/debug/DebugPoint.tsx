@@ -1,18 +1,18 @@
+import { TransformProvider } from "@alan404/react-workspace";
+import { Vec2 } from "@alan404/vec2";
 import { Box, Tooltip } from "@mantine/core";
-import { TransformProvider } from "../../workspace/Transform";
-import { Position } from "../../types/scalar";
 
 export const DebugPoint = ({
     pos,
     size = 20,
     label,
 }: {
-    pos?: Position,
+    pos?: Vec2,
     size?: number,
     label?: string,
 }) => {
     return (
-        <TransformProvider value={{
+        <TransformProvider position={{
             x: (pos?.x || 0) - size/2,
             y: (pos?.y || 0) - size/2,
         }}>

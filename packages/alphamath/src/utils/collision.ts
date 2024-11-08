@@ -1,13 +1,14 @@
-import { Position, Size } from "../types/scalar";
+import { Vec2 } from "@alan404/vec2";
+import { Size } from "../types/scalar";
 
-const toAABB = (a: Position & Size) => ({
+const toAABB = (a: Vec2 & Size) => ({
     minX: a.x,
     minY: a.y,
     maxX: a.x + a.w,
     maxY: a.y + a.h,
 });
 
-export const isColliding = (_a: Position & Size, _b: Position & Size) => {
+export const isColliding = (_a: Vec2 & Size, _b: Vec2 & Size) => {
     let a = toAABB(_a);
     let b = toAABB(_b);
 
@@ -19,7 +20,7 @@ export const isColliding = (_a: Position & Size, _b: Position & Size) => {
     )
 }
 
-export const ensureInsideContainer = (container: Size, actor: Size & Position): Size & Position => ({
+export const ensureInsideContainer = (container: Size, actor: Size & Vec2): Size & Vec2 => ({
     ...actor,
     x: Math.max(actor.x, 0),
     y: Math.max(actor.y, 0),

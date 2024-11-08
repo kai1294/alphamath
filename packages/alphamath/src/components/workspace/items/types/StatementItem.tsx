@@ -1,7 +1,7 @@
 import { Box, Flex, Paper, Text } from "@mantine/core";
 import { ItemComponent } from "../../../../types/app/item";
 import { NodeComponent } from "../../../math/node/NodeComponent";
-import { DragHandle } from "../../util/DragHandle";
+import { DragHandle } from "@alan404/react-workspace";
 import { IconGripVertical } from "@tabler/icons-react";
 import { match } from "@alan404/enum";
 import { MathStatement } from "@/types/model/statement";

@@ -1,18 +1,19 @@
 import { noop } from "@mantine/core";
-import { DefaultPosition, DefaultSize, Position, Size } from "../../../types/scalar";
-import { WithSetters } from "../../../types/utils";
+import { DefaultSize, Size } from "../../types/scalar";
+import { WithSetters } from "../../types/utils";
 import React, { PropsWithChildren } from "react";
 import { useUncontrolled } from "@mantine/hooks";
-import { TransformProvider } from "./Transform";
+import { TransformProvider } from "@alan404/react-workspace";
+import { vec2, Vec2 } from "@alan404/vec2";
 
 export interface IContainer {
     size: Size;
-    position: Position;
+    position: Vec2;
 };
 
 export const Container = React.createContext<WithSetters<IContainer>>({
     size: DefaultSize,
-    position: DefaultPosition,
+    position: vec2(),
     setPosition: noop,
     setSize: noop,
 });
@@ -44,7 +45,7 @@ export const ContainerProvider = ({
             }}
         >
             <TransformProvider
-                value={position}
+                position={position}
                 onChange={setPosition}
             >
                 {children}

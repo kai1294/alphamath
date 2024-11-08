@@ -1,10 +1,8 @@
-import { useContext } from "react"
 import { Box, Button, Group, Text } from "@mantine/core";
-import { useMousePosition } from "../../../../hooks/useMousePosition";
-import { GlobalTransform } from "../../core/GlobalTransform";
+import { useGlobalTransform, useMousePosition } from "@alan404/react-workspace";
 
 export const PositionOverlay = () => {
-    const { position, scale, reset } = useContext(GlobalTransform);
+    const { position, scale, reset } = useGlobalTransform();
     const mouse = useMousePosition();
 
     return (
@@ -13,7 +11,7 @@ export const PositionOverlay = () => {
                 <Text c="dimmed" ta="center" fz="sm">
                     Workspace: ({position.x}, {position.y}) {scale.toString().slice(0, 3)}x
                     <br />
-                    Mouse: ({mouse.x}, {mouse.y})
+                    Mouse: ({Math.round(mouse.x)}, {Math.round(mouse.y)})
                 </Text>
             </Group>
         </Box>

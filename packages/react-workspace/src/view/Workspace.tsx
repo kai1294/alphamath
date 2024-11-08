@@ -2,7 +2,7 @@ import { forwardRef, PropsWithChildren, ReactNode, useImperativeHandle, useRef }
 import { BackgroundGrid } from "./BackgroundGrid";
 import { WorkspaceView } from "./WorkspaceView";
 import { usePanning } from "../hooks";
-import { useScaling } from "../hooks/useScaling";
+import { mergeProps } from "../utils";
 
 export interface WorkspaceProps extends PropsWithChildren {
     background?: ReactNode;
@@ -13,19 +13,15 @@ export const Workspace = forwardRef<HTMLDivElement, WorkspaceProps>(({
     background,
     children,
     withCursor = true,
-}, fwd) => {
-    const ref = useRef<HTMLDivElement | null>(null);
-
-    useImperativeHandle(fwd, () => ref.current!, []);
-
-    const isPanning = usePanning(ref);
-    useScaling(ref);
+}, ref) => {
+    const { isPanning, props } = usePanning();
 
     return (
         <div>
             {background ?? <BackgroundGrid />}
             <WorkspaceView
                 ref={ref}
+                {...props}
                 style={{
                     cursor: withCursor ? (isPanning ? "grabbing" : "all-scroll") : undefined,
                 }}

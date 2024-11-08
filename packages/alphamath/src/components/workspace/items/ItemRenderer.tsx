@@ -1,6 +1,5 @@
 import { Item, ItemComponent } from "../../../types/app/item";
 import { WithSetters } from "../../../types/utils";
-import { TransformProvider } from "../core/Transform";
 import { NoteItem } from "./types/NoteItem";
 import { ErrorCard } from "../../debug/ErrorCard";
 import { DebugItem } from "./types/DebugItem";
@@ -9,6 +8,7 @@ import { StatementItem } from "./types/StatementItem";
 import { match } from "@alan404/enum";
 import { Transition } from "@mantine/core";
 import { useState } from "react";
+import { TransformProvider } from "@alan404/react-workspace";
 
 export interface ItemRendererProps extends WithSetters<{ item: Item }> {
     onFocus?: () => void;
@@ -37,7 +37,7 @@ export const ItemRenderer = ({
     }) as ItemComponent<typeof item["type"]>;
 
     return (
-        <TransformProvider value={item.position} onChange={(position) => setItem({
+        <TransformProvider position={item.position} onChange={(position) => setItem({
             ...item,
             position,
         })}>

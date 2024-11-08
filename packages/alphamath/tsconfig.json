@@ -22,14 +22,19 @@
         "noUnusedParameters": false,
         "noFallthroughCasesInSwitch": false,
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": ["./src/*"],
+            "@alan404/vec2": ["../vec2/src/index.ts"],
+            "@alan404/react-workspace": ["../react-workspace/src/index.ts"],
         }
     },
-    "include": [
-        "src"
-    ],
-    "exclude": ["src/_old"],
+    "include": ["src"],
     "references": [
+        {
+            "path": "../vec2",
+        },
+        {
+            "path": "../react-workspace",
+        },
         {
             "path": "./tsconfig.node.json"
         }

@@ -1,6 +1,6 @@
 import { Box, Group, Paper, Stack, Text } from "@mantine/core";
 import React, { PropsWithChildren } from "react";
-import { DragHandle } from "./DragHandle";
+import { DragHandle } from "@alan404/react-workspace";
 import { Size } from "../../../types/scalar";
 import { LongActionIcon } from "../../menu/ui/LongActionIcon";
 import { IconTrash, IconX } from "@tabler/icons-react";
@@ -39,7 +39,7 @@ export const PanelWindow = ({
             radius="sm"
         >
             <Stack gap={0} w="100%" h="100%">
-                <DragHandle w="100%" onMouseDown={onFocus}>
+                <DragHandle onMouseDown={onFocus}>
                     <Box
                         h="2em"
                         w="100%"
@@ -75,8 +75,6 @@ export const PanelWindow = ({
 
             {resizable && (
                 <DragHandle
-                    w="1em"
-                    h="1em"
                     style={{
                         position: "absolute",
                         bottom: "-0.2em",

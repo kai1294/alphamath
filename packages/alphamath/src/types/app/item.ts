@@ -1,14 +1,15 @@
 import React from "react";
 import { MathStatement } from "../model/statement";
 import { EnumVariantComponent } from "../utils";
-import { DefaultPosition, DefaultSize, Position, Size, WithId } from "../scalar";
 import { id } from "../../utils/id";
+import { DefaultSize, Size, WithId } from "../scalar";
 import { createFactory, Enum } from "@alan404/enum";
 import { MathNode } from "../model/node";
+import { Vec2, vec2 } from "@alan404/vec2";
 
 export const Item = createFactory<Item>(({ type }) => ({
     id: id(),
-    position: DefaultPosition,
+    position: vec2(),
 }));
 
 export type Item = Enum<{
@@ -25,7 +26,7 @@ export type Item = Enum<{
         size: Size;
     };
 }> & {
-    position: Position;
+    position: Vec2;
 } & WithId;
 
 export type ItemComponent<Ty extends Item["type"]> = EnumVariantComponent<Item, Ty, {

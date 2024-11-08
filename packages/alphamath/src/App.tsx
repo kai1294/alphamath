@@ -1,15 +1,12 @@
-import { WorkspaceView } from "./components/workspace/WorkspaceView";
 import { MainOverlay } from "./components/workspace/overlay/MainOverlay";
-import { BackgroundGrid } from "./components/detail/BackgroundGrid";
 import { ToolProvider } from "./components/workspace/ToolContext";
-import { GlobalTransformProvider } from "./components/workspace/core/GlobalTransform";
 import { WorkspaceContext, WorkspaceProvider } from "./components/workspace/WorkspaceContext";
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { ItemRenderer } from "./components/workspace/items/ItemRenderer";
-import { TransformProvider } from "./components/workspace/core/Transform";
 import { IconCrosshair } from "@tabler/icons-react";
 import { ContextStack } from "./components/util/ContextStack";
 import { SelectionContextProvider } from "./components/math/select/SelectionContext";
+import { BackgroundGrid, GlobalTransformProvider, TransformProvider, usePanning, WorkspaceView } from "@alan404/react-workspace";
 
 const RootItemRenderer = () => {
     const { items, setItems } = useContext(WorkspaceContext);
@@ -27,6 +24,39 @@ const RootItemRenderer = () => {
     )
 }
 
+const MainView = () => {
+    const {
+        isPanning,
+        props,
+    } = usePanning();
+
+    return (
+        <div>
+            <BackgroundGrid />
+            <WorkspaceView
+                {...props}
+                id="workspace-view"
+                style={{
+                    cursor: isPanning ? "grabbing" : "all-scroll",
+                }}
+            >
+                <div  style={{
+                    width: "100%",
+                    height: "100%",
+                    position: "absolute",
+                }} />
+
+                <TransformProvider initialPosition={{ x: -25, y: -25 }}>
+                    <IconCrosshair size={50} />
+                </TransformProvider>
+
+                <RootItemRenderer />
+            </WorkspaceView>
+            <MainOverlay />
+        </div>
+    )
+};
+
 const App = () => {
     return (
         <ContextStack providers={[
@@ -35,15 +65,7 @@ const App = () => {
             ToolProvider,
             SelectionContextProvider,
         ]}>
-            <BackgroundGrid />
-            <WorkspaceView>
-                <TransformProvider defaultValue={{ x: -25, y: -25 }}>
-                    <IconCrosshair size={50} />
-                </TransformProvider>
-
-                <RootItemRenderer />
-            </WorkspaceView>
-            <MainOverlay />
+            <MainView />
         </ContextStack>
     );
 }

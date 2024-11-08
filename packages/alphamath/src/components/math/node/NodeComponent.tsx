@@ -2,10 +2,7 @@ import { Box, Group, Paper, Text } from "@mantine/core";
 import { MathNode } from "../../../types/model/node";
 import { WithSetters } from "../../../types/utils";
 import { AdditionNode } from "./types/AdditionNode";
-import { TransformProvider } from "@/components/workspace/core/Transform";
-import { DragHandle } from "@/components/workspace/util/DragHandle";
 import { ComponentType, PropsWithChildren, useContext, useState } from "react";
-import { DefaultPosition, Position } from "@/types/scalar";
 import { useSortable } from "@dnd-kit/sortable";
 import { match } from "@alan404/enum";
 import { MultiplicationNode } from "./types/MultiplicationNode";
@@ -13,6 +10,8 @@ import { ErrorCard } from "@/components/debug/ErrorCard";
 import { NodeComponentWrapper, WithWrappers, WrappersContext } from "./Wrappers";
 import { Selectable } from "../select/Selectable";
 import { SelectableWrapper } from "./wrappers/SelectableWrapper";
+import { TransformProvider } from "@alan404/react-workspace";
+import { vec2 } from "@alan404/vec2";
 
 export const SortableNodeComponent = ({
     node,
@@ -30,7 +29,7 @@ export const SortableNodeComponent = ({
 
     return (
         <TransformProvider
-            value={transform || DefaultPosition}
+            position={transform || vec2()}
             style={{
                 transition,
                 position: "unset",

@@ -1,9 +1,9 @@
 import { useWindowEvent } from "@mantine/hooks";
-import React, { useState } from "react";
-import { Vec2, vec2, vec2add, vec2average, vec2client, vec2distance, vec2div, vec2sub } from "@alan404/vec2";
+import React, { useCallback, useState } from "react";
+import { Vec2, vec2, vec2add, vec2average, vec2client, vec2div, vec2sub } from "@alan404/vec2";
 import { getMouseButtons } from "../utils";
 import { useGlobalTransform } from "./useGlobalTransform";
-import { useElementEvent } from "./useElementEvent";
+import { MouseEvents, TouchEvents } from "./events";
 
 export interface UseRelativeDragOptions {
     position: Vec2;
@@ -17,10 +17,13 @@ export interface UseRelativeDragOptions {
 
 export interface UseRelativeDrag {
     isDragging: boolean;
+    props: MouseEvents & TouchEvents;
 };
 
+type MouseEv = React.MouseEventHandler<HTMLElement>;
+type TouchEv = React.TouchEventHandler<HTMLElement>;
+
 export const useRelativeDrag = (
-    ref: React.MutableRefObject<HTMLElement | null | undefined>,
     {
         position,
         onDrag,
@@ -48,26 +51,16 @@ export const useRelativeDrag = (
         });
     };
 
-    const onInputMove = (delta: Vec2) => {
+    const onInputMove = useCallback((delta: Vec2) => {
         if (disabled) return;
         onDrag(vec2add(startDragPosition, vec2div(vec2sub(delta, start), scale || defaultScale)));
-    };
+    }, [startDragPosition, disabled, start, scale]);
 
     useWindowEvent("keydown", (e) => {
         if(e.key == "Escape" && isDragging) setIsDragging(false);
     });
 
-    useWindowEvent("mousemove", (e) => {
-        if (!isDragging || disabled) return;
-        if (!getMouseButtons(e).left) return setIsDragging(false);
-        onInputMove(vec2client(e));
-    });
-
-    useWindowEvent("mouseup", (e) => {
-        setIsDragging(false);
-    });
-
-    useElementEvent(ref, "mousedown", (e) => {
+    const onMouseDown: MouseEv = useCallback((e) => {
         if (!getMouseButtons(e).left) return;
         if (disabled) return;
         e.stopPropagation();
@@ -77,9 +70,19 @@ export const useRelativeDrag = (
         setIsDragging(true);
         setStart(vec2client(e));
         setStartDragPosition(position);
-    }, [position], { passive: false });
+    }, [position]);
 
-    useElementEvent(ref, "touchstart", (e) => {
+    useWindowEvent("mousemove", useCallback((e) => {
+        if (!isDragging || disabled) return;
+        if (!getMouseButtons(e).left) return setIsDragging(false);
+        onInputMove(vec2client(e));
+    }, [disabled, isDragging, scale]));
+
+    const onMouseUp: MouseEv = useCallback((e) => {
+        setIsDragging(false);
+    }, []);
+
+    const onTouchStart: TouchEv = useCallback((e) => {
         if (!e.touches.length) return; 
         if (e.touches.length !== 1 && !allowMultitouch) return setIsDragging(false); 
         e.preventDefault();
@@ -89,22 +92,31 @@ export const useRelativeDrag = (
         setIsDragging(true);
         setStart(vec2average(touches.map(vec2client)));
         setStartDragPosition(position);
-    }, [position], { passive: false });
+    }, [position]);
 
-    useElementEvent(ref, "touchmove", (e) => {
+    const onTouchMove: TouchEv = useCallback((e) => {
         if (!isDragging) return;
         if (e.touches.length != 1 && !allowMultitouch) return setIsDragging(false);
         e.preventDefault();
 
         let touches = Array(e.touches.length).fill(0).map((_,i) => e.touches[i]);
         onInputMove(vec2average(touches.map(vec2client)));
-    }, [isDragging, position], { passive: false });
+    }, [isDragging, position]);
 
-    useElementEvent(ref, "touchend", (e) => {
+    const onTouchEnd: TouchEv = useCallback((e) => {
         setIsDragging(false);
-    });
+    }, []);
+
+    const props = {
+        onMouseDown,
+        onMouseUp,
+        onTouchStart,
+        onTouchMove,
+        onTouchEnd,
+    };
 
     return {
-        isDragging
+        isDragging,
+        props,
     };
 };

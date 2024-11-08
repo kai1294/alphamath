@@ -1,6 +1,7 @@
 import { Vec2 } from "@alan404/vec2";
 import { useRelativeDrag, useTransform } from "../hooks";
-import { forwardRef, useImperativeHandle, useRef } from "react";
+import { forwardRef } from "react";
+import { mergeProps } from "../utils";
 
 export type DragHandleProps = {
     position?: Vec2;
@@ -21,24 +22,25 @@ export const DragHandle = forwardRef<HTMLDivElement, DragHandleProps>(({
     onDragEnd,
     disabled,
     ...props
-}, fwd) => {
+}, ref) => {
     const { position, setPosition } = useTransform();
-    const ref = useRef<HTMLDivElement | null>(null);
 
-    useImperativeHandle(fwd, () => ref.current, []);
-
-    const { isDragging } = useRelativeDrag(ref, {
+    const { isDragging, props: _props } = useRelativeDrag({
         position: _position || position,
         onDrag: _setPosition || setPosition,
-        onDragStart: onDragStart,
-        onDragEnd: onDragEnd,
+        onDragStart,
+        onDragEnd,
         disabled,
     });
 
     return (
         <div
-            {...props}
-            ref={ref}            
+            {...mergeProps(
+                props,
+                _props
+            )}
+            ref={ref}
+            data-dragging={isDragging}
             style={{
                 cursor: withCursor !== false ? (isDragging ? "grabbing" : "grab") : undefined,
                 ...style,
