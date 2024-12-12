@@ -6,11 +6,19 @@ settings:
 
 importers:
 
+  .: {}
+
   packages/alphamath:
     dependencies:
       '@alan404/enum':
         specifier: ^0.2.1
         version: 0.2.1
+      '@alan404/react-workspace':
+        specifier: 'workspace:'
+        version: link:../react-workspace
+      '@alan404/vec2':
+        specifier: 'workspace:'
+        version: link:../vec2
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
