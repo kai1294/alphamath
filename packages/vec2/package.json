@@ -1,6 +1,6 @@
 {
   "name": "@alan404/vec2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "`{ x, y }` type and utilities for working with them",
   "repository": "https://github.com/TheAlan404/alphamath/tree/main/packages/react-workspace",
 	"type": "module",
