@@ -1,4 +1,4 @@
-import { vec2, Vec2, vec2t } from "./vec2";
+import { vec2, Vec2, vec2t } from "./vec2.js";
 
 export const vec2client = ({ clientX, clientY }: { clientX: number; clientY: number }) =>
     vec2(clientX, clientY);

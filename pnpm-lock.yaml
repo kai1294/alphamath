@@ -649,8 +649,8 @@ packages:
   brigadier-ts@1.4.1:
     resolution: {integrity: sha512-h8FA86Ql8Wim21n843uT9JS5sYx/Oi9+VnzHzRktp0eErgCQehK4VNYRTq0unStSHV2Kqw5+Zmg6uz0HpFWBWQ==}
 
-  chokidar@4.0.1:
-    resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
+  chokidar@4.0.3:
+    resolution: {integrity: sha512-Qgzu8kfBvo+cA4962jnP1KkS6Dop5NS6g7R5LFYJr4b8Ub94PPQXUksCw9PvXoeXPRRddRNC5C1JQUR2SMGtnA==}
     engines: {node: '>= 14.16.0'}
 
   clsx@2.1.1:
@@ -1452,7 +1452,7 @@ snapshots:
 
   brigadier-ts@1.4.1: {}
 
-  chokidar@4.0.1:
+  chokidar@4.0.3:
     dependencies:
       readdirp: 4.0.2
     optional: true
@@ -1748,7 +1748,7 @@ snapshots:
 
   sass@1.80.6:
     dependencies:
-      chokidar: 4.0.1
+      chokidar: 4.0.3
       immutable: 4.3.7
       source-map-js: 1.2.1
     optionalDependencies:

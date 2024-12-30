@@ -1,5 +1,5 @@
-import { asVec2, Vec2Like } from "./utils";
-import { vec2 } from "./vec2";
+import { asVec2, Vec2Like } from "./utils.js";
+import { vec2 } from "./vec2.js";
 
 export const vec2add = (...vecs: Vec2Like[]) => {
     return vecs.map(asVec2).reduce((acc, cur) => vec2(acc.x + cur.x, acc.y + cur.y));

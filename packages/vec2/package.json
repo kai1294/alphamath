@@ -1,8 +1,8 @@
 {
   "name": "@alan404/vec2",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "`{ x, y }` type and utilities for working with them",
-  "repository": "https://github.com/TheAlan404/alphamath/tree/main/packages/react-workspace",
+  "repository": "https://github.com/TheAlan404/alphamath/tree/main/packages/vec2",
 	"type": "module",
   "files": [
     "/dist"
@@ -12,7 +12,8 @@
     "types": "dist/src/index.d.ts"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
   "keywords": [],
   "author": "alan404",
