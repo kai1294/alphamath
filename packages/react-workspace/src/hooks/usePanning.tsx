@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { useGlobalTransform } from "./useGlobalTransform";
-import { useRelativeDrag } from "./useRelativeDrag";
-import { useBoolean } from "./useBoolean";
+import { useGlobalTransform } from "./useGlobalTransform.js";
+import { useRelativeDrag } from "./useRelativeDrag.js";
+import { useBoolean } from "./useBoolean.js";
 import { vec2, Vec2, vec2add, vec2average, vec2client, vec2distance, vec2mul, vec2sub } from "@alan404/vec2";
-import { useMousePosition } from "./useMousePosition";
-import { MouseEvents, TouchEvents } from "./events";
-import { mergeProps } from "../utils";
+import { useMousePosition } from "./useMousePosition.js";
+import { MouseEvents, TouchEvents } from "./events.js";
+import { mergeProps } from "../utils/index.js";
 
 export interface UsePanningOptions {
     wheelScaleOn?: "cursor" | "window";

@@ -1,15 +1,16 @@
 {
 	"extends": "../../tsconfig.base.json",
 	"compilerOptions": {
-		"module": "ESNext",
+		"module": "NodeNext",
 		"target": "ESNext",
 		"declaration": true,
 		"outDir": "./dist",
 		"rootDir": ".",
 		"esModuleInterop": true,
-		"allowArbitraryExtensions": true,
-		"moduleResolution": "Bundler",
+		"allowArbitraryExtensions": false,
+		"moduleResolution": "nodenext",
 		"resolveJsonModule": true,
+		"skipLibCheck": true,
 		"jsx": "react-jsx",
 		"composite": true,
 		"paths": {

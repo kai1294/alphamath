@@ -1,4 +1,4 @@
-import { useGlobalTransform } from "../hooks/useGlobalTransform";
+import { useGlobalTransform } from "../hooks/useGlobalTransform.js";
 
 export type BackgroundGridProps = {
     color?: string;

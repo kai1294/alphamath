@@ -1,5 +1,5 @@
 import { forwardRef, PropsWithChildren, useContext } from "react";
-import { GlobalTransform } from "../core/GlobalTransformContext";
+import { GlobalTransform } from "../core/GlobalTransformContext.js";
 
 export type WorkspaceViewProps = PropsWithChildren & JSX.IntrinsicElements["div"];
 

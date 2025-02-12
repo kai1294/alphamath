@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import { useElementEvent } from "../hooks";
+import { useElementEvent } from "../hooks/index.js";
 
 export const NoPropagation = forwardRef<HTMLDivElement, JSX.IntrinsicElements["div"]>((props, fwd) => {
     const ref = useRef<HTMLDivElement | null>(null);

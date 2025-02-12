@@ -1,3 +1,3 @@
-export * from "./mouse";
-export * from "./merge";
-export * from "./NoPropagation";
+export * from "./mouse.js";
+export * from "./merge.js";
+export * from "./NoPropagation.js";

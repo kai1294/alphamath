@@ -1,8 +1,7 @@
 import { forwardRef, PropsWithChildren, ReactNode, useImperativeHandle, useRef } from "react";
-import { BackgroundGrid } from "./BackgroundGrid";
-import { WorkspaceView } from "./WorkspaceView";
-import { usePanning } from "../hooks";
-import { mergeProps } from "../utils";
+import { BackgroundGrid } from "./BackgroundGrid.js";
+import { WorkspaceView } from "./WorkspaceView.js";
+import { usePanning } from "../hooks/index.js";
 
 export interface WorkspaceProps extends PropsWithChildren {
     background?: ReactNode;

@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 import { Vec2, vec2round } from "@alan404/vec2";
-import { GlobalTransform, IGlobalTransform } from "./GlobalTransformContext";
+import { GlobalTransform, IGlobalTransform } from "./GlobalTransformContext.js";
 import { useUncontrolled } from "@mantine/hooks";
 
 export interface GlobalTransformProviderProps extends PropsWithChildren, Partial<IGlobalTransform> {};

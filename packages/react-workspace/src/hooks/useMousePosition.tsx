@@ -1,5 +1,5 @@
 import { useMouse } from "@mantine/hooks";
-import { useGlobalTransform } from "./useGlobalTransform";
+import { useGlobalTransform } from "./useGlobalTransform.js";
 import { Vec2 } from "@alan404/vec2";
 
 /**

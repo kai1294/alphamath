@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { GlobalTransform, IGlobalTransform } from "../core";
+import { GlobalTransform, IGlobalTransform } from "../core/index.js";
 import { Vec2, vec2client, vec2div, vec2sub } from "@alan404/vec2";
 
 export interface IGlobalTransformUtils {

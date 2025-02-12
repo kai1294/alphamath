@@ -1,7 +1,7 @@
 import { Vec2 } from "@alan404/vec2";
-import { useRelativeDrag, useTransform } from "../hooks";
+import { useRelativeDrag, useTransform } from "../hooks/index.js";
 import { forwardRef } from "react";
-import { mergeProps } from "../utils";
+import { mergeProps } from "../utils/index.js";
 
 export type DragHandleProps = {
     position?: Vec2;

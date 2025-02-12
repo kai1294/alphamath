@@ -1,9 +1,9 @@
 import { useWindowEvent } from "@mantine/hooks";
 import React, { useCallback, useState } from "react";
 import { Vec2, vec2, vec2add, vec2average, vec2client, vec2div, vec2sub } from "@alan404/vec2";
-import { getMouseButtons } from "../utils";
-import { useGlobalTransform } from "./useGlobalTransform";
-import { MouseEvents, TouchEvents } from "./events";
+import { getMouseButtons } from "../utils/index.js";
+import { useGlobalTransform } from "./useGlobalTransform.js";
+import { MouseEvents, TouchEvents } from "./events.js";
 
 export interface UseRelativeDragOptions {
     position: Vec2;
