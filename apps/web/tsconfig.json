@@ -3,4 +3,12 @@
     "include": [
         "src"
     ],
+    "compilerOptions": {
+        "paths": {
+            "@/*": ["./src/*"],
+            "@alan404/vec2": ["../vec2/src/index.ts"],
+            "@alan404/react-workspace": ["../react-workspace/src/index.ts"]
+        }
+    },
+    "references": [{ "path": "./tsconfig.node.json" }]
 }
