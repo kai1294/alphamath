@@ -1,24 +1,9 @@
 {
-	"extends": "../../tsconfig.base.json",
+	"extends": "@repo/typescript-config/react-library.json",
 	"compilerOptions": {
-		"module": "NodeNext",
-		"target": "ESNext",
-		"declaration": true,
 		"outDir": "./dist",
-		"rootDir": ".",
-		"esModuleInterop": true,
-		"allowArbitraryExtensions": false,
-		"moduleResolution": "nodenext",
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"jsx": "react-jsx",
-		"composite": true,
-		"paths": {
-			"@alan404/vec2": ["../vec2/src/index.ts"],
-		},
 	},
-	"references": [{ "path": "../vec2" }],
 	"include": [
-		"src/**/*"
+		"src"
 	]
 }
