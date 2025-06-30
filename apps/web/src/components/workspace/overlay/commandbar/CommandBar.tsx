@@ -1,7 +1,7 @@
-import { dispatcher } from "@/components/api/commands/dispatcher";
-import { ErrorCard } from "@/components/debug/ErrorCard";
-import { NodeComponent } from "@/components/math/node/NodeComponent";
-import { parseRPN } from "@/utils/serde/rpn/rpn";
+import { dispatcher } from "../../../api/commands/dispatcher";
+import { ErrorCard } from "../../../debug/ErrorCard";
+import { NodeComponent } from "../../../math/node/NodeComponent";
+import { parseRPN } from "../../../../utils/serde/rpn/rpn";
 import { Box, Combobox, noop, Stack, TextInput, useCombobox } from "@mantine/core"
 import { Suggestions } from "brigadier-ts";
 import { useEffect, useState } from "react"

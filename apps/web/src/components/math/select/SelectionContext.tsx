@@ -1,4 +1,4 @@
-import { childMathNodes, isMathNodeInside, MathNode } from "@/types/model/node";
+import { childMathNodes, isMathNodeInside, MathNode } from "../../../types/model/node";
 import { noop } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import { createContext, PropsWithChildren } from "react";

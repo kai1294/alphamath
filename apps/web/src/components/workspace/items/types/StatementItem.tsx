@@ -4,8 +4,8 @@ import { NodeComponent } from "../../../math/node/NodeComponent";
 import { DragHandle } from "@alan404/react-workspace";
 import { IconGripVertical } from "@tabler/icons-react";
 import { match } from "@alan404/enum";
-import { MathStatement } from "@/types/model/statement";
-import { shadow } from "@/utils/styling";
+import { MathStatement } from "../../../../types/model/statement";
+import { shadow } from "../../../../utils/styling";
 
 export const StatementItem: ItemComponent<"Statement"> = ({ data, onChange, onFocus, onClose }) => {
     return (

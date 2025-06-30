@@ -6,7 +6,7 @@ import { ComponentType, PropsWithChildren, useContext, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { match } from "@alan404/enum";
 import { MultiplicationNode } from "./types/MultiplicationNode";
-import { ErrorCard } from "@/components/debug/ErrorCard";
+import { ErrorCard } from "../../debug/ErrorCard";
 import { NodeComponentWrapper, WithWrappers, WrappersContext } from "./Wrappers";
 import { Selectable } from "../select/Selectable";
 import { SelectableWrapper } from "./wrappers/SelectableWrapper";

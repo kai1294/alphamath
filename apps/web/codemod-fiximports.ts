@@ -1,4 +1,4 @@
-import { globSync, readFileSync } from "node:fs"
+import { globSync, readFileSync, writeFileSync } from "node:fs"
 import { join, relative, resolve } from "node:path"
 
 const tsconfig = JSON.parse(readFileSync("./tsconfig.json").toString());
@@ -92,4 +92,8 @@ for(let entry of globSync([
 
         return statement;
     });
+
+    if(process.argv.includes("WRITE")) {
+        writeFileSync(entry, newContent);
+    }
 }

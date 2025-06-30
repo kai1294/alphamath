@@ -1,4 +1,4 @@
-import { MathNode } from "@/types/model/node";
+import { MathNode } from "../../../types/model/node";
 import { createContext } from "react";
 
 export interface IDraggedNodeContext {

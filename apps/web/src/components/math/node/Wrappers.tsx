@@ -1,5 +1,5 @@
-import { MathNode } from "@/types/model/node";
-import { WithSetters } from "@/types/utils";
+import { MathNode } from "../../../types/model/node";
+import { WithSetters } from "../../../types/utils";
 import { ComponentType, createContext, PropsWithChildren, useContext } from "react";
 
 export type NodeComponentWrapper = ComponentType<WithSetters<{ node: MathNode }> & PropsWithChildren>;

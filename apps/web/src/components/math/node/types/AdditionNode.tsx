@@ -1,5 +1,5 @@
-import { MathNode } from "@/types/model/node";
-import { EnumVariantComponent } from "@/types/utils";
+import { MathNode } from "../../../../types/model/node";
+import { EnumVariantComponent } from "../../../../types/utils";
 import { Box, Group, Text } from "@mantine/core";
 import { NodeComponent, SortableNodeComponent } from "../NodeComponent";
 import { SortableContext } from "@dnd-kit/sortable"

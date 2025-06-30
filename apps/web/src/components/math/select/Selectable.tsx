@@ -1,7 +1,7 @@
 import { PropsWithChildren, useCallback, useContext } from "react";
 import { SelectedItem, SelectionContext } from "./SelectionContext"
 import { Box } from "@mantine/core";
-import { ToolContext } from "@/components/workspace/ToolContext";
+import { ToolContext } from "../../workspace/ToolContext";
 
 export const Selectable = ({
     children,

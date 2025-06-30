@@ -1,4 +1,4 @@
-import { id } from "@/utils/id";
+import { id } from "../utils/id";
 
 export const noop = () => {};
 

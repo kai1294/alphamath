@@ -1,4 +1,4 @@
-import { MathNode } from "@/types/model/node";
+import { MathNode } from "../../../types/model/node";
 import { Enum } from "@alan404/enum";
 
 export type Pattern<E extends Enum<any>> = {

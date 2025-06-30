@@ -4,7 +4,7 @@ import { DragHandle } from "@alan404/react-workspace";
 import { Size } from "../../../types/scalar";
 import { LongActionIcon } from "../../menu/ui/LongActionIcon";
 import { IconTrash, IconX } from "@tabler/icons-react";
-import { shadow } from "@/utils/styling";
+import { shadow } from "../../../utils/styling";
 
 export const PanelWindow = ({
     children,
