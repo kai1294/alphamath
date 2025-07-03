@@ -109,6 +109,19 @@ importers:
         specifier: ^5.4.2
         version: 5.4.10(@types/node@24.0.7)(less@3.13.1)(sass@1.80.6)
 
+  packages/model:
+    dependencies:
+      zod:
+        specifier: ^3.25.67
+        version: 3.25.67
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.6.3
+        version: 5.8.3
+
   packages/react-workspace:
     dependencies:
       '@alan404/vec2':
@@ -132,6 +145,15 @@ importers:
         version: 18.3.1
       typescript:
         specifier: latest
+        version: 5.8.3
+
+  packages/string-reader:
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      typescript:
+        specifier: ^5.6.3
         version: 5.8.3
 
   packages/typescript-config: {}
@@ -1118,6 +1140,9 @@ packages:
     resolution: {integrity: sha512-Dhxzh5HZuiHQhbvTW9AMetFfBHDMYpo23Uo9btPXgdYP+3T5S+p+jgNy7spra+veYhBP2dCSgxR/i2Y02h5/6w==}
     engines: {node: '>=0.10.0'}
 
+  zod@3.25.67:
+    resolution: {integrity: sha512-idA2YXwpCdqUSKRCACDE6ItZD9TZzy3OZMtpfLoh6oPR47lipysRrJfjzMqFxQ3uJuUPyUeWe1r9vLH33xO/Qw==}
+
 snapshots:
 
   '@alan404/enum@0.2.1': {}
@@ -1934,3 +1959,5 @@ snapshots:
       sass: 1.80.6
 
   void-elements@3.1.0: {}
+
+  zod@3.25.67: {}

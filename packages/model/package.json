@@ -1,0 +1,19 @@
+{
+  "name": "@repo/model",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./workspace": "./src/workspace/index.ts"
+  },
+  "keywords": [],
+  "author": "alan404",
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "zod": "^3.25.67"
+  }
+}
