@@ -8,8 +8,8 @@
 		".": "./src/index.ts"
 	},
 	"publishConfig": {
-		"main": "dist/src/index.js",
-		"types": "dist/src/index.d.ts"
+		"main": "dist/index.js",
+		"types": "dist/index.d.ts"
 	},
 	"type": "module",
 	"files": [
@@ -20,14 +20,16 @@
 		"prepublish": "tsc"
 	},
 	"devDependencies": {
+		"@repo/typescript-config": "workspace:*",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
-		"@repo/typescript-config": "workspace:*",
 		"typescript": "latest"
 	},
 	"dependencies": {
-		"@mantine/hooks": "^7.13.4",
-		"react": "^18.3.1",
-		"@alan404/vec2": "workspace:*"
+		"@alan404/vec2": "workspace:*",
+		"@mantine/hooks": "^7.13.4"
+	},
+	"peerDependencies": {
+		"react": "^19.1.0"
 	}
 }

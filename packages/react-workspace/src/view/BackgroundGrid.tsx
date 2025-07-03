@@ -15,9 +15,9 @@ export const BackgroundGrid = ({
 
     const size = `${distance * scale}px`;
     const line = `${color} ${thickness}px`;
-    const backgroundImage = `linear-gradient(to right, ${color} ${thickness}px, transparent 1px), linear-gradient(to bottom, ${color} ${thickness}px, transparent 1px)`;
+    const backgroundImage = `linear-gradient(to right, ${line}, transparent 1px), linear-gradient(to bottom, ${line}, transparent 1px)`;
     const backgroundPosition = `${position.x}px ${position.y}px`;
-    const backgroundSize = `${distance * scale}px ${distance * scale}px`;
+    const backgroundSize = `${size} ${size}`;
 
     return (
         <div

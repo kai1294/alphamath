@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { Vec2, vec2round } from "@alan404/vec2";
 import { GlobalTransform, IGlobalTransform } from "./GlobalTransformContext.js";
 import { useUncontrolled } from "@mantine/hooks";
@@ -33,6 +33,10 @@ export const GlobalTransformProvider = ({
         onChange: _setPosition,
     });
 
+    const setPositionRounded = useCallback((pos: Vec2) => {
+        setPosition(vec2round(pos));
+    }, [setPosition]);
+
     return (
         <GlobalTransform.Provider value={{
             scale,
@@ -40,7 +44,7 @@ export const GlobalTransformProvider = ({
             setScale,
             position,
             initialPosition,
-            setPosition: (pos) => setPosition(vec2round(pos)),
+            setPosition: setPositionRounded,
             minScale,
             maxScale,
         }}>
