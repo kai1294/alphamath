@@ -1,5 +1,7 @@
-import { BoxedExpression, ComputeEngine } from "@cortex-js/compute-engine";
-const ce = new ComputeEngine();
+import { BoxedExpression } from "@cortex-js/compute-engine";
+
+// Each node is structured as { type: string, data: object }
+
 export type RelationOperator = "==" | "!=" | "<" | ">" | "<=" | ">="; // TODO: add custom operator functionality
 export type LogicOperator = "&&" | "||" | "=>" | "<=>";
 export type TextNode = { type: "text", data: { content: string  } };
